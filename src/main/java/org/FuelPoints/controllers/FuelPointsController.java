@@ -21,12 +21,6 @@ public class FuelPointsController {
     VehicleRepository vehicles;
 
 
-    @RequestMapping(path = "/hello", method = RequestMethod.GET)
-    public String home() {
-
-        return "hello";
-    }
-
     @RequestMapping(path = "/login", method = RequestMethod.POST)
     public User login(HttpServletResponse response, String username, String password) throws Exception {
         User user = users.findFirstByName(username);
@@ -54,5 +48,7 @@ public class FuelPointsController {
             response.sendError(201, "User successfully created.");
         }
     }
+
+
 }
 
