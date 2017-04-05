@@ -16,6 +16,7 @@ import jodd.json.JsonParser;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -28,7 +29,7 @@ public class FuelPointsController {
 
 
     @RequestMapping(path = "/login", method = RequestMethod.POST)
-    public User login(HttpServletResponse response, @RequestBody String body) throws Exception {
+    public User login(HttpServletResponse response, @RequestBody String body) throws Exception { //todo: hashmap
 
 
         JsonParser p = new JsonParser();
@@ -49,16 +50,19 @@ public class FuelPointsController {
 //    }
 //
 //
-//    @RequestMapping(path = "/register", method = RequestMethod.POST)
-//    public void register(HttpServletResponse response, @RequestBody String body) throws IOException, PasswordStorage.CannotPerformOperationException {
-//        User user = users.findFirstByName(username);
-//        if (user != null) {
-//            response.sendError(401, "Username is not available.");
-//        } else {
-//            users.save(new User(username, password));
-//            response.sendError(201, "User successfully created.");
-//        }
-//    }
+    @RequestMapping(path = "/register", method = RequestMethod.POST)
+    public void register(HttpServletResponse response, @RequestBody String body) throws IOException, PasswordStorage.CannotPerformOperationException {
+        JsonParser p = new JsonParser();
+        JsonUser jsonUser = p.parse(body, JsonUser.class);
+
+        User user = users.findFirstByName(jsonUser.getName());
+        if (user != null) {
+            response.sendError(401, "Username is not available.");
+        } else {
+            users.save(new User(jsonUser.getName(), jsonUser.getPassword()));
+            response.sendError(201, "User successfully created.");
+        }
+    }
 //
 //    @RequestMapping(path = "/add_vehicle", method = RequestMethod.POST)
 //    public void addVehicle(HttpServletResponse response, @RequestBody String body) throws IOException {
