@@ -7,6 +7,9 @@ import javax.persistence.*;
 public class Vehicle {
     @Id
     @GeneratedValue
+    Integer id;
+
+    @Column
     String make;
 
     @Column
