@@ -2,7 +2,6 @@ package org.FuelPoints.entities;
 
 import org.FuelPoints.utilities.PasswordStorage;
 
-import java.util.List;
 import javax.persistence.*;
 
 @Entity
