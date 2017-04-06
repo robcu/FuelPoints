@@ -29,52 +29,53 @@ public class FuelPointsController {
 
 
     @RequestMapping(path = "/login", method = RequestMethod.POST)
-    public User login(HttpServletResponse response, @RequestBody String body) throws Exception { //todo: hashmap
+    public User login(HttpServletResponse response, @RequestBody HashMap<String, String> body) throws Exception {
 
-
-        JsonParser p = new JsonParser();
-        JsonUser jsonUser = p.parse(body, JsonUser.class);
-
-        User user = users.findFirstByName(jsonUser.getName());
+        User user = users.findFirstByName(body.get("name"));
         if (user == null) {
             response.sendError(401, "Account does not exist.");
-        } else if (!user.verifyPassword(jsonUser.getPassword())) {
+        } else if (!user.verifyPassword(body.get("password"))) {
             response.sendError(401, "Invalid credentials");
         }
         return user;
     }
-
 //    @RequestMapping(path = "/logout", method = RequestMethod.POST)
-//    public void logout(HttpServletResponse response) {
-//
-//    }
-//
-//
-    @RequestMapping(path = "/register", method = RequestMethod.POST)
-    public void register(HttpServletResponse response, @RequestBody String body) throws IOException, PasswordStorage.CannotPerformOperationException {
-        JsonParser p = new JsonParser();
-        JsonUser jsonUser = p.parse(body, JsonUser.class);
+//    public void logout(HttpServletResponse response) { }
 
-        User user = users.findFirstByName(jsonUser.getName());
+    @RequestMapping(path = "/register", method = RequestMethod.POST)
+    public void register(HttpServletResponse response, @RequestBody HashMap<String, String> body) throws IOException, PasswordStorage.CannotPerformOperationException {
+
+        User user = users.findFirstByName(body.get("name"));
         if (user != null) {
             response.sendError(401, "Username is not available.");
         } else {
-            users.save(new User(jsonUser.getName(), jsonUser.getPassword()));
+            users.save(new User(body.get("name"), body.get("password")));
             response.sendError(201, "User successfully created.");
         }
     }
-//
-//    @RequestMapping(path = "/add_vehicle", method = RequestMethod.POST)
-//    public void addVehicle(HttpServletResponse response, @RequestBody String body) throws IOException {
-//        vehicles.save(new Vehicle(make, model, year, user));
-//        response.sendError(201, "Vehicle added.");
-//    }
-//
-//    @RequestMapping(path = "/delete_vehicle", method = RequestMethod.POST)
-//    public void deleteVehicle(HttpServletResponse response, @RequestBody String body) throws IOException {
-//        vehicles.delete(id);
-//        response.sendError(200, "Vehicle deleted");
-//    }
+
+    @RequestMapping(path = "/add_vehicle", method = RequestMethod.POST)
+    public void addVehicle(HttpServletResponse response, @RequestBody HashMap<String, String> body) throws IOException {
+
+        User user = users.findById(Integer.parseInt(body.get("user")));
+        Vehicle vehicle = new Vehicle(body.get("make"), body.get("model"), Integer.parseInt(body.get("year")), user);
+        vehicles.save(vehicle);
+        response.sendError(201, "Vehicle added.");
+    }
+
+    @RequestMapping(path = "/delete_vehicle", method = RequestMethod.POST)
+    public void deleteVehicle(HttpServletResponse response, @RequestBody HashMap<String, String> body) throws IOException {
+
+        Integer id = Integer.parseInt(body.get("id"));
+
+        if (vehicles.exists(id)) {
+            vehicles.delete(id);
+            response.sendError(200, "Vehicle deleted");
+        } else {
+            response.sendError(400, "Error deleting vehicle.");
+        }
+    }
+
 //    @RequestMapping(path = "/change_username", method = RequestMethod.POST)
 //    public void changeUsername(HttpServletResponse response, @RequestBody String body){
 //
