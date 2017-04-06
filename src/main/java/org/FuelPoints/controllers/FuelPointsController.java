@@ -3,6 +3,7 @@ package org.FuelPoints.controllers;
 import org.FuelPoints.entities.JsonUser;
 import org.FuelPoints.entities.User;
 import org.FuelPoints.entities.Vehicle;
+import org.FuelPoints.services.TripRepository;
 import org.FuelPoints.services.UserRepository;
 import org.FuelPoints.services.VehicleRepository;
 import org.FuelPoints.utilities.PasswordStorage;
@@ -26,15 +27,19 @@ public class FuelPointsController {
     UserRepository users;
     @Autowired
     VehicleRepository vehicles;
+    @Autowired
+    TripRepository trips;
 
 
     @RequestMapping(path = "/login", method = RequestMethod.POST)
-    public User login(HttpServletResponse response, @RequestBody HashMap<String, String> body) throws Exception {
+    public User login(HttpServletResponse response, @RequestBody String body) throws Exception {
+        JsonParser p = new JsonParser();
+        JsonUser jsonUser = p.parse(body, JsonUser.class);
 
-        User user = users.findFirstByName(body.get("name"));
+        User user = users.findFirstByName(jsonUser.getName());
         if (user == null) {
             response.sendError(401, "Account does not exist.");
-        } else if (!user.verifyPassword(body.get("password"))) {
+        } else if (!user.verifyPassword(jsonUser.getPassword())) {
             response.sendError(401, "Invalid credentials");
         }
         return user;
@@ -43,30 +48,32 @@ public class FuelPointsController {
 //    public void logout(HttpServletResponse response) { }
 
     @RequestMapping(path = "/register", method = RequestMethod.POST)
-    public void register(HttpServletResponse response, @RequestBody HashMap<String, String> body) throws IOException, PasswordStorage.CannotPerformOperationException {
+    public void register(HttpServletResponse response, @RequestBody String body) throws IOException, PasswordStorage.CannotPerformOperationException {
+        JsonParser p = new JsonParser();
+        JsonUser jsonUser = p.parse(body, JsonUser.class);
 
-        User user = users.findFirstByName(body.get("name"));
+        User user = users.findFirstByName(jsonUser.getName());
         if (user != null) {
             response.sendError(401, "Username is not available.");
         } else {
-            users.save(new User(body.get("name"), body.get("password")));
+            users.save(new User(jsonUser.getName(), jsonUser.getPassword()));
             response.sendError(201, "User successfully created.");
         }
     }
 
     @RequestMapping(path = "/add_vehicle", method = RequestMethod.POST)
-    public void addVehicle(HttpServletResponse response, @RequestBody HashMap<String, String> body) throws IOException {
+    public void addVehicle(HttpServletResponse response, @RequestBody String body) throws IOException {
+        JsonParser p = new JsonParser();
+        Vehicle vehicle = p.parse(body, Vehicle.class);
 
-        User user = users.findById(Integer.parseInt(body.get("user")));
-        Vehicle vehicle = new Vehicle(body.get("make"), body.get("model"), Integer.parseInt(body.get("year")), user);
-        vehicles.save(vehicle);
+        vehicles.save(new Vehicle(vehicle.getMake(), vehicle.getModel(), vehicle.getYear(), vehicle.getUser()));
         response.sendError(201, "Vehicle added.");
     }
 
     @RequestMapping(path = "/delete_vehicle", method = RequestMethod.POST)
-    public void deleteVehicle(HttpServletResponse response, @RequestBody HashMap<String, String> body) throws IOException {
-
-        Integer id = Integer.parseInt(body.get("id"));
+    public void deleteVehicle(HttpServletResponse response, @RequestBody String body) throws IOException {
+        JsonParser p = new JsonParser();
+        Integer id = p.parse(body, Integer.class);
 
         if (vehicles.exists(id)) {
             vehicles.delete(id);
@@ -78,10 +85,8 @@ public class FuelPointsController {
 
 //    @RequestMapping(path = "/change_username", method = RequestMethod.POST)
 //    public void changeUsername(HttpServletResponse response, @RequestBody String body){
-//
 //    }
-//
-//
+
 //    @RequestMapping(path = "/change_password", method = RequestMethod.POST)
 //    public void changePassword(HttpServletResponse response, @RequestBody String body) throws PasswordStorage.CannotPerformOperationException, PasswordStorage.InvalidHashException, IOException {
 //        User user = users.findFirstByName(username);
