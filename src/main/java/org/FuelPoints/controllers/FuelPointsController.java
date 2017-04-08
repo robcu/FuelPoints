@@ -13,13 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import jodd.json.JsonParser;
-
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+
 
 @RestController
 public class FuelPointsController {
@@ -32,9 +29,9 @@ public class FuelPointsController {
 
 
     @RequestMapping(path = "/login", method = RequestMethod.POST)
-    public User login(HttpServletResponse response, @RequestBody String body) throws Exception {
-        JsonParser p = new JsonParser();
-        JsonUser jsonUser = p.parse(body, JsonUser.class);
+    public User login(HttpServletResponse response, @RequestBody @Valid JsonUser jsonUser) throws Exception {
+//        JsonParser p = new JsonParser();
+//        JsonUser jsonUser = p.parse(body, JsonUser.class);
 
         User user = users.findFirstByName(jsonUser.getName());
         if (user == null) {
@@ -48,9 +45,9 @@ public class FuelPointsController {
 //    public void logout(HttpServletResponse response) { }
 
     @RequestMapping(path = "/register", method = RequestMethod.POST)
-    public void register(HttpServletResponse response, @RequestBody String body) throws IOException, PasswordStorage.CannotPerformOperationException {
-        JsonParser p = new JsonParser();
-        JsonUser jsonUser = p.parse(body, JsonUser.class);
+    public void register(HttpServletResponse response, @RequestBody @Valid JsonUser jsonUser) throws IOException, PasswordStorage.CannotPerformOperationException {
+//        JsonParser p = new JsonParser();
+//        JsonUser jsonUser = p.parse(body, JsonUser.class);
 
         User user = users.findFirstByName(jsonUser.getName());
         if (user != null) {
@@ -62,18 +59,19 @@ public class FuelPointsController {
     }
 
     @RequestMapping(path = "/add_vehicle", method = RequestMethod.POST)
-    public void addVehicle(HttpServletResponse response, @RequestBody String body) throws IOException {
-        JsonParser p = new JsonParser();
-        Vehicle vehicle = p.parse(body, Vehicle.class);
+    public void addVehicle(HttpServletResponse response, @RequestBody @Valid Vehicle vehicle) throws IOException {
+//        JsonParser p = new JsonParser();
+//        Vehicle vehicle = p.parse(body, Vehicle.class);
+//        vehicles.save(new Vehicle(vehicle.getMake(), vehicle.getModel(), vehicle.getYear(), vehicle.getUser()));
 
-        vehicles.save(new Vehicle(vehicle.getMake(), vehicle.getModel(), vehicle.getYear(), vehicle.getUser()));
+        vehicles.save(vehicle);
         response.sendError(201, "Vehicle added.");
     }
 
     @RequestMapping(path = "/delete_vehicle", method = RequestMethod.POST)
-    public void deleteVehicle(HttpServletResponse response, @RequestBody String body) throws IOException {
-        JsonParser p = new JsonParser();
-        Integer id = p.parse(body, Integer.class);
+    public void deleteVehicle(HttpServletResponse response, @RequestBody @Valid Integer id) throws IOException {
+//        JsonParser p = new JsonParser();
+//        Integer id = p.parse(body, Integer.class);
 
         if (vehicles.exists(id)) {
             vehicles.delete(id);
@@ -82,6 +80,10 @@ public class FuelPointsController {
             response.sendError(400, "Error deleting vehicle.");
         }
     }
+
+
+}
+
 
 //    @RequestMapping(path = "/change_username", method = RequestMethod.POST)
 //    public void changeUsername(HttpServletResponse response, @RequestBody String body){
@@ -99,5 +101,5 @@ public class FuelPointsController {
 //        }
 //    }
 
-}
+
 
