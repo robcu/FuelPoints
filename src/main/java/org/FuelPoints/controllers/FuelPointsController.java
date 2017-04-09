@@ -1,6 +1,5 @@
 package org.FuelPoints.controllers;
 
-import org.FuelPoints.clients.FuelEconomy;
 import org.FuelPoints.vessels.JsonUser;
 import org.FuelPoints.entities.User;
 import org.FuelPoints.entities.Vehicle;
@@ -19,7 +18,7 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import static org.FuelPoints.clients.FuelEconomy.getListOfYears;
+import static org.FuelPoints.clients.FuelEconomy.retrieveList;
 
 
 @RestController
@@ -85,11 +84,34 @@ public class FuelPointsController {
         }
     }
 
+    //todo: FOR BELOW
+    //todo: convert returned ArrayList<String> to JSON?
+    //todo: take parameters from @RequestBody to insert into url string
+
     @RequestMapping(path = "/account/vehicles/years", method = RequestMethod.POST)
     public ArrayList<String> years(HttpServletResponse response) throws IOException {
 
-        return getListOfYears();  //todo: convert listOfYears to JSON?
+        return retrieveList("http://www.fueleconomy.gov/ws/rest/vehicle/menu/year");
     }
+
+    @RequestMapping(path = "/account/vehicles/makes", method = RequestMethod.POST)
+    public ArrayList<String> makes(HttpServletResponse response) throws IOException {
+
+        return retrieveList("http://www.fueleconomy.gov/ws/rest/vehicle/menu/make?year=2012");
+    }
+
+    @RequestMapping(path = "/account/vehicles/models", method = RequestMethod.POST)
+    public ArrayList<String> models(HttpServletResponse response) throws IOException {
+
+        return retrieveList("http://www.fueleconomy.gov/ws/rest/vehicle/menu/model?year=2012&make=Honda");
+    }
+
+    @RequestMapping(path = "/account/vehicles/models", method = RequestMethod.POST)
+    public ArrayList<String> options(HttpServletResponse response) throws IOException {
+
+        return retrieveList("http://www.fueleconomy.gov/ws/rest/vehicle/menu/options?year=2012&make=Honda&model=Fit");
+    }
+
 }
 
 

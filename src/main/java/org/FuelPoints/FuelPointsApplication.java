@@ -9,7 +9,7 @@ import java.io.IOException;
 public class FuelPointsApplication {
 
 	public static void main(String[] args) throws IOException {
-		FuelEconomy.getListOfYears();
+		FuelEconomy.retrieveList();
 		//SpringApplication.run(FuelPointsApplication.class, args);
 
 	}
