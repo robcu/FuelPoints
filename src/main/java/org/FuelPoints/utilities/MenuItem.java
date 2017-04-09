@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 @XmlRootElement(name = "menuItem")
-@XmlAccessorType(XmlAccessType.NONE)
+@XmlAccessorType(XmlAccessType.FIELD)
 public class MenuItem {
     @XmlElement(name="text")
     String text;

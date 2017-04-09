@@ -4,7 +4,7 @@ import javax.xml.bind.annotation.*;
 
 @XmlRootElement(name = "vehicle")
 @XmlAccessorType(XmlAccessType.NONE)
-public class TempVehicle {
+public class XMLVehicle {
     @XmlElement(name = "make")
     String make;
     @XmlElement(name = "model")
@@ -12,14 +12,14 @@ public class TempVehicle {
     @XmlElement(name = "year")
     String year;
 
-    public TempVehicle(String make, String model, String year) {
+    public XMLVehicle(String make, String model, String year) {
 
         this.make = make;
         this.model = model;
         this.year = year;
     }
 
-    public TempVehicle() {
+    public XMLVehicle() {
 
     }
 
