@@ -1,4 +1,4 @@
-package org.FuelPoints.utilities;
+package org.FuelPoints.vessels;
 
 import javax.xml.bind.annotation.*;
 
@@ -13,14 +13,12 @@ public class XMLVehicle {
     String year;
 
     public XMLVehicle(String make, String model, String year) {
-
         this.make = make;
         this.model = model;
         this.year = year;
     }
 
     public XMLVehicle() {
-
     }
 
     public String getMake() {

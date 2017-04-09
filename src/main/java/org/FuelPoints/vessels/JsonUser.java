@@ -1,4 +1,4 @@
-package org.FuelPoints.entities;
+package org.FuelPoints.vessels;
 
 public class JsonUser {
     String name;

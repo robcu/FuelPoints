@@ -1,7 +1,7 @@
 package org.FuelPoints.clients;
 
-import org.FuelPoints.utilities.MenuItems;
-import org.FuelPoints.utilities.XMLVehicle;
+import org.FuelPoints.vessels.MenuItems;
+import org.FuelPoints.vessels.XMLVehicle;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;

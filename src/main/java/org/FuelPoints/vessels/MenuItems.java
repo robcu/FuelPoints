@@ -1,19 +1,18 @@
-package org.FuelPoints.utilities;
+package org.FuelPoints.vessels;
 
-import org.FuelPoints.utilities.MenuItem;
+import org.FuelPoints.vessels.MenuItem;
 
 import javax.xml.bind.annotation.*;
 import java.util.ArrayList;
-import java.util.List;
 
 @XmlRootElement(name="menuItems")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class MenuItems {
 
     @XmlElement(name="menuItem")
-    List<MenuItem> listOfMenuItems;
+    ArrayList<MenuItem> listOfMenuItems;
 
-    public MenuItems(List<MenuItem> menuItems) {
+    public MenuItems(ArrayList<MenuItem> menuItems) {
         this.listOfMenuItems = menuItems;
     }
 
@@ -21,11 +20,11 @@ public class MenuItems {
 
     }
 
-    public List<MenuItem> getMenuItems() {
+    public ArrayList<MenuItem> getMenuItems() {
         return listOfMenuItems;
     }
 
-    public void setMenuItems(List<MenuItem> menuItems) {
+    public void setMenuItems(ArrayList<MenuItem> menuItems) {
         this.listOfMenuItems = menuItems;
     }
 }

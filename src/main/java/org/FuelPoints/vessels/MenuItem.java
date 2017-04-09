@@ -1,8 +1,6 @@
-package org.FuelPoints.utilities;
+package org.FuelPoints.vessels;
 
 import javax.xml.bind.annotation.*;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 @XmlRootElement(name = "menuItem")
 @XmlAccessorType(XmlAccessType.FIELD)
