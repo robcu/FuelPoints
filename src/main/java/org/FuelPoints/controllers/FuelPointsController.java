@@ -7,6 +7,7 @@ import org.FuelPoints.services.TripRepository;
 import org.FuelPoints.services.UserRepository;
 import org.FuelPoints.services.VehicleRepository;
 import org.FuelPoints.utilities.PasswordStorage;
+import org.FuelPoints.vessels.MenuItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +20,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import static org.FuelPoints.clients.FuelEconomy.retrieveList;
+import static org.FuelPoints.clients.FuelEconomy.retrieveOptionsAndVehicleNumber;
 
 
 @RestController
@@ -106,10 +108,11 @@ public class FuelPointsController {
         return retrieveList("http://www.fueleconomy.gov/ws/rest/vehicle/menu/model?year=2012&make=Honda");
     }
 
-    @RequestMapping(path = "/account/vehicles/models", method = RequestMethod.POST)
-    public ArrayList<String> options(HttpServletResponse response) throws IOException {
+    @RequestMapping(path = "/account/vehicles/options", method = RequestMethod.POST)
+    public ArrayList<MenuItem> options(HttpServletResponse response) throws IOException {
+    //todo: do i need to convert arraylist<menuItem> into a hashmap? can I do that at the menuitem or menuitems class level?
 
-        return retrieveList("http://www.fueleconomy.gov/ws/rest/vehicle/menu/options?year=2012&make=Honda&model=Fit");
+        return retrieveOptionsAndVehicleNumber("http://www.fueleconomy.gov/ws/rest/vehicle/menu/options?year=2012&make=Honda&model=Fit");
     }
 
 }

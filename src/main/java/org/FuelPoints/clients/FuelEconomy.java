@@ -9,19 +9,26 @@ import org.springframework.web.client.RestTemplate;
 import java.io.IOException;
 import java.util.ArrayList;
 
+//todo: get mpg data for a vehicle, add field to classes
+
 public class FuelEconomy {
 
     public static ArrayList<String> retrieveList(String url) throws IOException {
         RestTemplate restTemplate = new RestTemplate();
         MenuItems mi = restTemplate.getForObject(url, MenuItems.class);
-        ArrayList<String> listOfValues = new ArrayList<>();
+        ArrayList<String> listOfTexts = new ArrayList<>();
         for(MenuItem m : mi.getMenuItems()){
-            listOfValues.add(m.getValue());
+            listOfTexts.add(m.getText());
         }
-        return listOfValues;
+        return listOfTexts;
     }
-    //todo: Choose appropriate object type to return for each of these methods.
-    //todo: (cont..) Do more processing here so less has to be done in the route.
+
+    public static ArrayList<MenuItem> retrieveOptionsAndVehicleNumber(String url){
+        RestTemplate restTemplate = new RestTemplate();
+        MenuItems mi = restTemplate.getForObject(url, MenuItems.class);
+
+        return mi.getMenuItems();
+    }
 
 
     public static XMLVehicle retrieveXMLVehicle() {
