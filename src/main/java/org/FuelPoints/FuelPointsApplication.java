@@ -1,7 +1,6 @@
 package org.FuelPoints;
 
 import org.FuelPoints.clients.FuelEconomy;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.io.IOException;
@@ -10,7 +9,7 @@ import java.io.IOException;
 public class FuelPointsApplication {
 
 	public static void main(String[] args) throws IOException {
-		FuelEconomy.getYears();
+		FuelEconomy.getListOfYears();
 		//SpringApplication.run(FuelPointsApplication.class, args);
 
 	}

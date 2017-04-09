@@ -1,5 +1,6 @@
 package org.FuelPoints.controllers;
 
+import org.FuelPoints.clients.FuelEconomy;
 import org.FuelPoints.vessels.JsonUser;
 import org.FuelPoints.entities.User;
 import org.FuelPoints.entities.Vehicle;
@@ -16,6 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.ArrayList;
+
+import static org.FuelPoints.clients.FuelEconomy.getListOfYears;
 
 
 @RestController
@@ -81,7 +85,11 @@ public class FuelPointsController {
         }
     }
 
+    @RequestMapping(path = "/account/vehicles/years", method = RequestMethod.POST)
+    public ArrayList<String> years(HttpServletResponse response) throws IOException {
 
+        return getListOfYears();  //todo: convert listOfYears to JSON?
+    }
 }
 
 
