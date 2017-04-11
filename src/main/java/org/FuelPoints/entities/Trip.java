@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class Trip {
     @Id
     @GeneratedValue
-    Integer id;
+    String id;
 
     @Column
     String startLoc;
@@ -44,7 +44,7 @@ public class Trip {
         this.vehicle = vehicle;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 

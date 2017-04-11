@@ -1,13 +1,19 @@
 package org.FuelPoints.entities;
 
+import org.FuelPoints.utilities.HasId;
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "vehicles")
-public class Vehicle {
+public class Vehicle implements HasId {
+    private static final long serialVersionUID = 1L;
+
     @Id
-    @GeneratedValue
-    Integer id;
+    @GeneratedValue(generator="system-uuid")
+    @GenericGenerator(name="system-uuid", strategy = "uuid")
+    String id;
 
     @Column
     String make;
@@ -16,7 +22,7 @@ public class Vehicle {
     String model;
 
     @Column
-    Integer year;
+    Integer year;   //todo: make string?
 
     @ManyToOne
     User user;
@@ -30,6 +36,14 @@ public class Vehicle {
         this.year = year;
         this.user = user;
     }
+
+    @Override
+    public String getId() {
+        return id;
+    }
+//    public void setId(String id){
+//        this.id = id;
+//    }
 
     public String getMake() {
         return make;
@@ -62,4 +76,6 @@ public class Vehicle {
     public void setUser(User user) {
         this.user = user;
     }
+
+
 }

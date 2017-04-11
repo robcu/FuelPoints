@@ -16,6 +16,7 @@ public class FuelEconomy {
     public static ArrayList<String> retrieveList(String url) throws IOException {
         RestTemplate restTemplate = new RestTemplate();
         MenuItems mi = restTemplate.getForObject(url, MenuItems.class);
+
         ArrayList<String> listOfTexts = new ArrayList<>();
         for(MenuItem m : mi.getMenuItems()){
             listOfTexts.add(m.getText());
