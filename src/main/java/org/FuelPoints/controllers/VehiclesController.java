@@ -31,10 +31,13 @@ public class VehiclesController {
     @RequestMapping(path = "/add_vehicle", method = RequestMethod.POST)
     public void addVehicle(HttpServletResponse response, @RequestBody RootParser<Integer> vehicleId) throws IOException {
 
-//        vehicles.save(new Vehicle(vehicle.getMake(), vehicle.getModel(), vehicle.getYear(), vehicle.getUser()));
-        XMLVehicle xmlVehicle = retrieveXMLVehicle();
-        //vehicles.save(vehicle);
+        XMLVehicle xmlVehicle = retrieveXMLVehicle(vehicleId.getData().getId());
+
+//      vehicles.save(new Vehicle(vehicle.getMake(), vehicle.getModel(), vehicle.getYear(), vehicle.getUser()));
+//      vehicles.save(vehicle);
         response.sendError(201, "Vehicle added.");
+
+        //todo: return what? also save vehicle
     }
 
     @RequestMapping(path = "/delete_vehicle", method = RequestMethod.POST)
@@ -46,10 +49,11 @@ public class VehiclesController {
         } else {
             response.sendError(400, "Error deleting vehicle.");
         }
+        //todo: return what?
     }
 
     //todo: FOR BELOW
-    //todo: convert returned ArrayList<String> to JSON?
+    //todo: parse
     //todo: take parameters from @RequestBody to insert into url string
 
     @RequestMapping(path = "/account/vehicles/years", method = RequestMethod.POST)

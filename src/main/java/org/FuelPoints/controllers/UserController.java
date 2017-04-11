@@ -43,7 +43,7 @@ public class UserController {
             response.sendError(401, "Invalid credentials");
         }
         return rootSerializer.serializeOne(
-                "/users/" + user.getId(),   //todo: what if user does not exist / null ??
+                "/users/" + user.getId(),   //todo: what if user is null ??
                 user,
                 userSerializer);
     }
@@ -62,7 +62,7 @@ public class UserController {
         }
         return rootSerializer.serializeOne(
                 "/users/" + user.getId(),
-                user,
+                user,                                 //todo: what if user is null?
                 userSerializer);
 
     }

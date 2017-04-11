@@ -1,8 +1,9 @@
 package org.FuelPoints.vessels;
 
 public class JsonUser {
+
     String name;
-    private String password;
+    String password;
 
     public JsonUser(String name, String password) {
         this.name = name;

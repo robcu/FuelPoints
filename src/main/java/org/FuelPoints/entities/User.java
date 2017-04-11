@@ -40,9 +40,9 @@ public class User implements HasId {
         return id;
     }
 
-//    public void setId(String id){
-//        this.id = id;
-//    }
+    public void setId(String id){
+        this.id = id;
+    }
 
     private String getPasswordHash() {
         return password;

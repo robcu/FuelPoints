@@ -32,10 +32,10 @@ public class FuelEconomy {
     }
 
 
-    public static XMLVehicle retrieveXMLVehicle() {
+    public static XMLVehicle retrieveXMLVehicle(String id) {
 
         RestTemplate restTemplate = new RestTemplate();
-        XMLVehicle xmlVehicle = restTemplate.getForObject("http://www.fueleconomy.gov/ws/rest/vehicle/31873", XMLVehicle.class);
+        XMLVehicle xmlVehicle = restTemplate.getForObject("http://www.fueleconomy.gov/ws/rest/vehicle/" + id, XMLVehicle.class);
         System.out.println(xmlVehicle.getMake() + ", " + xmlVehicle.getModel() + ", " + xmlVehicle.getYear());
 
         //todo: convert to regular vehicle? would need user info
