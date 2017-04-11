@@ -41,11 +41,12 @@ public class UserController {
             response.sendError(401, "Account does not exist.");
         } else if (!user.verifyPassword(jsonUser.getData().getEntity().getPassword())) {
             response.sendError(401, "Invalid credentials");
+
+            return rootSerializer.serializeOne(
+                    "/users/" + user.getId(),
+                    user,
+                    userSerializer);
         }
-        return RootSerializer.serializeOne(
-                "/users/" + user.getId(),
-                user,
-                userSerializer);
     }
 
 
@@ -60,7 +61,7 @@ public class UserController {
             users.save(user);
             response.sendError(201, "User successfully created.");
         }
-        return RootSerializer.serializeOne(
+        return rootSerializer.serializeOne(
                 "/users/" + user.getId(),
                 user,
                 userSerializer);
