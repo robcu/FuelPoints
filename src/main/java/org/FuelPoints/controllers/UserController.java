@@ -1,6 +1,7 @@
 package org.FuelPoints.controllers;
 
 import org.FuelPoints.utilities.parsers.RootParser;
+import org.FuelPoints.utilities.serializers.JsonDataSerializer;
 import org.FuelPoints.utilities.serializers.RootSerializer;
 import org.FuelPoints.utilities.serializers.UserSerializer;
 import org.FuelPoints.vessels.JsonUser;
@@ -29,6 +30,8 @@ public class UserController {
     @Autowired
     TripRepository trips;
 
+    RootSerializer rootSerializer = new RootSerializer();
+    UserSerializer userSerializer = new UserSerializer();
 
     @RequestMapping(path = "/login", method = RequestMethod.POST)
     public HashMap<String, Object> login(HttpServletResponse response, @RequestBody RootParser<JsonUser> jsonUser) throws Exception {
@@ -42,7 +45,7 @@ public class UserController {
         return RootSerializer.serializeOne(
                 "/users/" + user.getId(),
                 user,
-                UserSerializer.class);
+                userSerializer);
     }
 
 
@@ -60,7 +63,7 @@ public class UserController {
         return RootSerializer.serializeOne(
                 "/users/" + user.getId(),
                 user,
-                UserSerializer.class);
+                userSerializer);
 
     }
 

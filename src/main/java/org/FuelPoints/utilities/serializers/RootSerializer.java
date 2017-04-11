@@ -18,7 +18,7 @@ public class RootSerializer {
         return result;
     }
 
-    public static HashMap<String, Object> serializeOne(String resourceUrl, HasId data, Class<UserSerializer> serializer) {
+    public static HashMap<String, Object> serializeOne(String resourceUrl, HasId data, JsonDataSerializer serializer) {
         HashMap<String, Object> result = makeRoot(resourceUrl);
         result.put("data", serializer.serialize(data));
 
