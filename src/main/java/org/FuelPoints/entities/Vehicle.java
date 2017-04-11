@@ -24,16 +24,24 @@ public class Vehicle implements HasId {
     @Column
     Integer year;   //todo: make string?
 
+    @Column
+    String option;
+
+    @Column
+    Integer fuelEconomyId;
+
     @ManyToOne
     User user;
 
     public Vehicle() {
     }
 
-    public Vehicle(String make, String model, Integer year, User user) {
+    public Vehicle(String make, String model, Integer year, String option, Integer fuelEconomyId, User user) {
         this.make = make;
         this.model = model;
         this.year = year;
+        this.option = option;
+        this.fuelEconomyId = fuelEconomyId;
         this.user = user;
     }
 
@@ -77,5 +85,19 @@ public class Vehicle implements HasId {
         this.user = user;
     }
 
+    public String getOption() {
+        return option;
+    }
 
+    public void setOption(String option) {
+        this.option = option;
+    }
+
+    public Integer getFuelEconomyId() {
+        return fuelEconomyId;
+    }
+
+    public void setFuelEconomyId(Integer fuelEconomyId) {
+        this.fuelEconomyId = fuelEconomyId;
+    }
 }

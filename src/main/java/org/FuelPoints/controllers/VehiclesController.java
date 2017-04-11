@@ -2,6 +2,8 @@ package org.FuelPoints.controllers;
 
 import org.FuelPoints.services.VehicleRepository;
 import org.FuelPoints.utilities.parsers.RootParser;
+import org.FuelPoints.utilities.serializers.RootSerializer;
+import org.FuelPoints.utilities.serializers.VehicleSerializer;
 import org.FuelPoints.vessels.MenuItem;
 import org.FuelPoints.vessels.XMLVehicle;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,9 @@ import static org.FuelPoints.clients.FuelEconomy.retrieveXMLVehicle;
 public class VehiclesController {
     @Autowired
     VehicleRepository vehicles;
+
+    RootSerializer rootSerializer = new RootSerializer();
+    VehicleSerializer vehicleSerializer = new VehicleSerializer();
 
     @RequestMapping(path = "/add_vehicle", method = RequestMethod.POST)
     public void addVehicle(HttpServletResponse response, @RequestBody RootParser<Integer> vehicleId) throws IOException {
