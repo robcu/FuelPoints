@@ -48,7 +48,6 @@ public class UserController {
                 userSerializer);
     }
 
-
     @RequestMapping(path = "/register", method = RequestMethod.POST)
     public HashMap<String, Object> register(HttpServletResponse response, @RequestBody RootParser<JsonUser> jsonUser) throws IOException, PasswordStorage.CannotPerformOperationException {
 
@@ -58,7 +57,7 @@ public class UserController {
         } else {
             user = new User(jsonUser.getData().getEntity().getName(), jsonUser.getData().getEntity().getPassword());
             users.save(user);
-            response.sendError(201, "User successfully created.");
+            response.setStatus(201);
         }
         return rootSerializer.serializeOne(
                 "/users/" + user.getId(),
@@ -66,8 +65,6 @@ public class UserController {
                 userSerializer);
 
     }
-
-
 
 }
 
