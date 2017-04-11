@@ -9,8 +9,6 @@ import org.FuelPoints.services.TripRepository;
 import org.FuelPoints.services.UserRepository;
 import org.FuelPoints.services.VehicleRepository;
 import org.FuelPoints.utilities.PasswordStorage;
-import org.FuelPoints.vessels.MenuItem;
-import org.FuelPoints.vessels.XMLVehicle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,12 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-
-import static org.FuelPoints.clients.FuelEconomy.retrieveList;
-import static org.FuelPoints.clients.FuelEconomy.retrieveOptionsAndVehicleNumber;
-import static org.FuelPoints.clients.FuelEconomy.retrieveXMLVehicle;
 
 
 @RestController
@@ -38,7 +31,7 @@ public class UserController {
 
 
     @RequestMapping(path = "/login", method = RequestMethod.POST)
-    public User login(HttpServletResponse response, @RequestBody RootParser<JsonUser> jsonUser) throws Exception {
+    public HashMap<String, Object> login(HttpServletResponse response, @RequestBody RootParser<JsonUser> jsonUser) throws Exception {
 
         User user = users.findFirstByName(jsonUser.getData().getEntity().getName());
         if (user == null) {
@@ -46,7 +39,10 @@ public class UserController {
         } else if (!user.verifyPassword(jsonUser.getData().getEntity().getPassword())) {
             response.sendError(401, "Invalid credentials");
         }
-        return user;
+        return RootSerializer.serializeOne(
+                "/users/" + user.getId(),
+                user,
+                UserSerializer.class);
     }
 
 
