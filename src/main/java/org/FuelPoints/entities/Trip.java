@@ -10,10 +10,10 @@ public class Trip {
     String id;
 
     @Column
-    String startLoc;
+    String origin;
 
     @Column
-    String endLoc;
+    String destination;
 
     @Column
     Double totalDistance;
@@ -37,9 +37,14 @@ public class Trip {
     public Trip() {
     }
 
-    public Trip(String startLoc, String endLoc, User user, Vehicle vehicle) {
-        this.startLoc = startLoc;
-        this.endLoc = endLoc;
+    public Trip(String origin, String destination){
+        this.origin = origin;
+        this.destination = destination;
+    }
+
+    public Trip(String origin, String destination, User user, Vehicle vehicle) {
+        this.origin = origin;
+        this.destination = destination;
         this.user = user;
         this.vehicle = vehicle;
     }
@@ -48,20 +53,20 @@ public class Trip {
         return id;
     }
 
-    public String getStartLoc() {
-        return startLoc;
+    public String getOrigin() {
+        return origin;
     }
 
-    public void setStartLoc(String startLoc) {
-        this.startLoc = startLoc;
+    public void setOrigin(String origin) {
+        this.origin = origin;
     }
 
-    public String getEndLoc() {
-        return endLoc;
+    public String getDestination() {
+        return destination;
     }
 
-    public void setEndLoc(String endLoc) {
-        this.endLoc = endLoc;
+    public void setDestination(String destination) {
+        this.destination = destination;
     }
 
     public Double getTotalDistance() {

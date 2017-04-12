@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Route {
-    Leg leg;
+    Leg leg;                    //todo: does a route ever contain multiple legs? if so, replace with ArrayList<Leg> legs;
     String summary;
 
     public Route(Leg leg, String summary) {

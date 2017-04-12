@@ -7,7 +7,7 @@ public class Leg {
 
     Distance distance;
     Duration duration;
-    End_address end_address;
+    End_address end_address;            //todo: drop address classes and replace with strings of same name? test
     Start_address start_address;
 
     public Leg() {

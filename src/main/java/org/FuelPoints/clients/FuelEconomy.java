@@ -1,5 +1,6 @@
 package org.FuelPoints.clients;
 
+import org.FuelPoints.utilities.DataList;
 import org.FuelPoints.vessels.MenuItem;
 import org.FuelPoints.vessels.MenuItems;
 import org.FuelPoints.vessels.XMLVehicle;
@@ -8,24 +9,28 @@ import org.springframework.web.client.RestTemplate;
 import java.io.IOException;
 import java.util.ArrayList;
 
+
 //todo: get mpg data for a vehicle, add field to classes
 
 public class FuelEconomy {
 
-    public static ArrayList<String> retrieveList(String url) throws IOException {
-        RestTemplate restTemplate = new RestTemplate();
-        MenuItems mi = restTemplate.getForObject(url, MenuItems.class);
+    public static String BASE_URL = "http://www.fueleconomy.gov/ws/rest/vehicle/menu/";
 
-        ArrayList<String> listOfTexts = new ArrayList<>();
+
+    public static DataList retrieveList(String urlExtension) throws IOException {
+        RestTemplate restTemplate = new RestTemplate();
+        MenuItems mi = restTemplate.getForObject(BASE_URL + urlExtension, MenuItems.class);
+
+        DataList dataList = new DataList();
         for(MenuItem m : mi.getMenuItems()){
-            listOfTexts.add(m.getText());
+            dataList.add(m.getText());
         }
-        return listOfTexts;
+        return dataList;
     }
 
-    public static ArrayList<MenuItem> retrieveOptionsAndVehicleNumber(String url){
+    public static ArrayList<MenuItem> retrieveOptionsAndVehicleNumbers(String urlExtension){
         RestTemplate restTemplate = new RestTemplate();
-        MenuItems mi = restTemplate.getForObject(url, MenuItems.class);
+        MenuItems mi = restTemplate.getForObject(BASE_URL + urlExtension, MenuItems.class);
 
         return mi.getMenuItems();
     }
