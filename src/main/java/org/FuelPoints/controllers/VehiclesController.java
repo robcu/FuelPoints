@@ -19,6 +19,7 @@ import static org.FuelPoints.clients.FuelEconomy.retrieveList;
 import static org.FuelPoints.clients.FuelEconomy.retrieveOptionsAndVehicleNumbers;
 import static org.FuelPoints.clients.FuelEconomy.retrieveXMLVehicle;
 
+@CrossOrigin(origins = "*") //TODO: Lock down to deployed prod domain
 @RestController
 public class VehiclesController {
     @Autowired
@@ -46,64 +47,17 @@ public class VehiclesController {
                 vehicleSerializer);
     }
 
-    @RequestMapping(path = "/vehicles", method = RequestMethod.POST)
-    public HashMap<String, Object> deleteVehicle(HttpServletResponse response, @RequestBody RootParser<String> id) throws IOException {
-        Vehicle vehicle = new Vehicle();
-        if (vehicles.exists(id.getData().getId())) {
-            vehicle = vehicles.findOne(id.getData().getId());
-            vehicles.delete(id.getData().getId());
-            response.sendError(200, "Vehicle deleted");
+    @RequestMapping(path = "/vehicles/{id}", method = RequestMethod.DELETE)
+    public void deleteVehicle(HttpServletResponse response, @PathVariable String id) throws IOException {
+        Vehicle vehicle = vehicles.findOne(id);
+        if (vehicle != null) {
+            vehicles.delete(id);
+            response.setStatus(204);
         } else {
             response.sendError(400, "Error deleting vehicle.");
         }
-        return rootSerializer.serializeOne(
-                "/vehicles/" + vehicle.getId(),
-                vehicle,
-                vehicleSerializer);
     }
 
 
-    @RequestMapping(path = "/account/vehicles/years", method = RequestMethod.GET)
-    public HashMap<String, Object> years(HttpServletResponse response) throws IOException {
 
-        DataList years = retrieveList("year");
-
-        return rootSerializer.serializeOne(     //todo: should this be serializeMany ?
-                "/years/" + "",
-                years,
-                dataListSerializer);
-    }
-
-    @RequestMapping(path = "/makes", method = RequestMethod.GET)
-    public HashMap<String, Object> makes(HttpServletResponse response, @RequestParam(value = "filter[year]") String year) throws IOException {
-
-        DataList dataList = retrieveList("make?year=" + year);
-
-        return rootSerializer.serializeMany(
-                "/makes?filter[year]=" + year,
-                dataList.getDataList(),
-                dataListSerializer);
-    }
-
-    @RequestMapping(path = "/account/vehicles/models", method = RequestMethod.POST)
-    public HashMap<String, Object> models(HttpServletResponse response, @RequestBody RootParser<DataList> parser) throws IOException {
-
-        String urlExtension = "make?year=" + parser.getData().getEntity().getDataList().get(0) + "&make=" + parser.getData().getEntity().getDataList().get(1);
-
-        DataList dataList = retrieveList(urlExtension);
-
-
-        return rootSerializer.serializeOne(     //todo: should this be serializeMany ?
-                "/years/" + "",
-                dataList,
-                dataListSerializer);
-    }
-
-//    @RequestMapping(path = "/account/vehicles/options", method = RequestMethod.POST)
-//    public HashMap<String, Object> options(HttpServletResponse response) throws IOException {
-//
-//        retrieveOptionsAndVehicleNumbers("http://www.fueleconomy.gov/ws/rest/vehicle/menu/options?year=2012&make=Honda&model=Fit");
-//
-//        return
-//    }
 }
