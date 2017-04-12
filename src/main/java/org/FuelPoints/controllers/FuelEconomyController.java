@@ -19,12 +19,12 @@ public class FuelEconomyController {
     RootSerializer rootSerializer = new RootSerializer();
     DataListSerializer dataListSerializer = new DataListSerializer();
 
-    @RequestMapping(path = "/account/vehicles/years", method = RequestMethod.GET)
+    @RequestMapping(path = "/years", method = RequestMethod.GET)
     public HashMap<String, Object> years(HttpServletResponse response) throws IOException {
 
         DataList years = retrieveList("year");
 
-        return rootSerializer.serializeMany(     //todo: should this be serializeMany ?
+        return rootSerializer.serializeMany(
                 "/years/" + "",
                 years.getDataList(),
                 dataListSerializer);
@@ -41,15 +41,17 @@ public class FuelEconomyController {
                 dataListSerializer);
     }
 
-    @RequestMapping(path = "/account/vehicles/models", method = RequestMethod.POST)
+    @RequestMapping(path = "/models", method = RequestMethod.POST)
     public HashMap<String, Object> models(HttpServletResponse response, @RequestBody RootParser<DataList> parser) throws IOException {
+
+            //todo: create object class like menuItem to get this requestbody
 
         String urlExtension = "make?year=" + parser.getData().getEntity().getDataList().get(0) + "&make=" + parser.getData().getEntity().getDataList().get(1);
 
         DataList dataList = retrieveList(urlExtension);
 
 
-        return rootSerializer.serializeMany(     //todo: should this be serializeMany ?
+        return rootSerializer.serializeMany(
                 "/years/" + "",
                 dataList.getDataList(),
                 dataListSerializer);
