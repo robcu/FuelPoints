@@ -1,5 +1,6 @@
 package org.FuelPoints.controllers;
 
+import org.FuelPoints.entities.Vehicle;
 import org.FuelPoints.services.VehicleRepository;
 import org.FuelPoints.utilities.parsers.RootParser;
 import org.FuelPoints.utilities.serializers.RootSerializer;
@@ -29,9 +30,11 @@ public class VehiclesController {
     VehicleSerializer vehicleSerializer = new VehicleSerializer();
 
     @RequestMapping(path = "/add_vehicle", method = RequestMethod.POST)
-    public void addVehicle(HttpServletResponse response, @RequestBody RootParser<Integer> vehicleId) throws IOException {
+    public void addVehicle(HttpServletResponse response, @RequestBody RootParser<Vehicle> vehicle) throws IOException {
 
-        XMLVehicle xmlVehicle = retrieveXMLVehicle(vehicleId.getData().getId());
+        //todo: how do i get "user" from front?
+
+        XMLVehicle xmlVehicle = retrieveXMLVehicle(vehicle.getData().getId());
 
 //      vehicles.save(new Vehicle(vehicle.getMake(), vehicle.getModel(), vehicle.getYear(), vehicle.getUser()));
 //      vehicles.save(vehicle);
