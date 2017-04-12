@@ -48,14 +48,17 @@ public class UserController {
                 userSerializer);
     }
 
-    @RequestMapping(path = "/register", method = RequestMethod.POST)
-    public HashMap<String, Object> register(HttpServletResponse response, @RequestBody RootParser<JsonUser> jsonUser) throws IOException, PasswordStorage.CannotPerformOperationException {
+    @RequestMapping(path = "/users", method = RequestMethod.POST)
+    public HashMap<String, Object> register(HttpServletResponse response, @RequestBody RootParser<JsonUser> parser) throws IOException, PasswordStorage.CannotPerformOperationException {
+        JsonUser jsonUser = parser.getData().getEntity();
+        //TODO: check for null
 
-        User user = users.findFirstByName(jsonUser.getData().getEntity().getName());
+        //TODO: try
+        User user = users.findFirstByName(jsonUser.getName());
         if (user != null) {
             response.sendError(401, "Username is not available.");
         } else {
-            user = new User(jsonUser.getData().getEntity().getName(), jsonUser.getData().getEntity().getPassword());
+            user = new User(jsonUser.getName(), jsonUser.getPassword());
             users.save(user);
             response.setStatus(201);
         }

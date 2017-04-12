@@ -9,10 +9,7 @@ import org.FuelPoints.utilities.serializers.RootSerializer;
 import org.FuelPoints.utilities.serializers.VehicleSerializer;
 import org.FuelPoints.vessels.XMLVehicle;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -31,7 +28,7 @@ public class VehiclesController {
     VehicleSerializer vehicleSerializer = new VehicleSerializer();
     DataListSerializer dataListSerializer = new DataListSerializer();
 
-    @RequestMapping(path = "/add_vehicle", method = RequestMethod.POST)
+    @RequestMapping(path = "/vehicles", method = RequestMethod.POST)
     public HashMap<String, Object> addVehicle(HttpServletResponse response, @RequestBody RootParser<Vehicle> parser) throws IOException {
         Vehicle vehicle = new Vehicle();
         //todo: i need "user" from front
@@ -49,7 +46,7 @@ public class VehiclesController {
                 vehicleSerializer);
     }
 
-    @RequestMapping(path = "/delete_vehicle", method = RequestMethod.POST)
+    @RequestMapping(path = "/vehicles", method = RequestMethod.POST)
     public HashMap<String, Object> deleteVehicle(HttpServletResponse response, @RequestBody RootParser<String> id) throws IOException {
         Vehicle vehicle = new Vehicle();
         if (vehicles.exists(id.getData().getId())) {
@@ -66,8 +63,8 @@ public class VehiclesController {
     }
 
 
-    @RequestMapping(path = "/account/vehicles/years", method = RequestMethod.POST)
-    public HashMap<String, Object> years(HttpServletResponse response, @RequestBody RootParser<String> temp) throws IOException {
+    @RequestMapping(path = "/account/vehicles/years", method = RequestMethod.GET)
+    public HashMap<String, Object> years(HttpServletResponse response) throws IOException {
 
         DataList years = retrieveList("year");
 
@@ -77,16 +74,14 @@ public class VehiclesController {
                 dataListSerializer);
     }
 
-    @RequestMapping(path = "/account/vehicles/makes", method = RequestMethod.POST)
-    public HashMap<String, Object> makes(HttpServletResponse response, @RequestBody RootParser<String> year) throws IOException {
+    @RequestMapping(path = "/makes", method = RequestMethod.GET)
+    public HashMap<String, Object> makes(HttpServletResponse response, @RequestParam(value = "filter[year]") String year) throws IOException {
 
-        String urlExtension = "make?year=" + year.getData().getEntity();
+        DataList dataList = retrieveList("make?year=" + year);
 
-        DataList dataList = retrieveList(urlExtension);
-
-        return rootSerializer.serializeOne(     //todo: should this be serializeMany ?
-                "/years/" + "",
-                dataList,
+        return rootSerializer.serializeMany(
+                "/makes?filter[year]=" + year,
+                dataList.getDataList(),
                 dataListSerializer);
     }
 
