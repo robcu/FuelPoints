@@ -1,5 +1,6 @@
 package org.FuelPoints.vessels;
 
+import org.FuelPoints.utilities.HasId;
 import org.FuelPoints.vessels.MenuItem;
 
 import javax.xml.bind.annotation.*;
@@ -7,7 +8,9 @@ import java.util.ArrayList;
 
 @XmlRootElement(name="menuItems")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class MenuItems {
+public class MenuItems implements HasId{
+
+    String id;
 
     @XmlElement(name="menuItem")
     ArrayList<MenuItem> listOfMenuItems;
@@ -26,5 +29,14 @@ public class MenuItems {
 
     public void setMenuItems(ArrayList<MenuItem> menuItems) {
         this.listOfMenuItems = menuItems;
+    }
+
+    @Override
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id){
+        this.id = id;
     }
 }

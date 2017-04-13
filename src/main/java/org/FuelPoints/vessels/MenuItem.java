@@ -1,10 +1,13 @@
 package org.FuelPoints.vessels;
 
+import org.FuelPoints.utilities.HasId;
+
 import javax.xml.bind.annotation.*;
 
 @XmlRootElement(name = "menuItem")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class MenuItem {
+public class MenuItem implements HasId{
+    String id;
     @XmlElement(name="text")
     String text;
     @XmlElement(name="value")
@@ -32,7 +35,15 @@ public class MenuItem {
     }
 
     public MenuItem() {
+    }
 
+    @Override
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id){
+        this.id = id;
     }
 }
 

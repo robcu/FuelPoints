@@ -27,11 +27,11 @@ public class FuelEconomy {
         return dataList;
     }
 
-    public static ArrayList<MenuItem> retrieveOptionsAndVehicleNumbers(String urlExtension){
+    public static MenuItems retrieveOptionsAndVehicleNumbers(String urlExtension){
         RestTemplate restTemplate = new RestTemplate();
         MenuItems mi = restTemplate.getForObject(BASE_URL + urlExtension, MenuItems.class);
 
-        return mi.getMenuItems();
+        return mi;
     }
 
 
