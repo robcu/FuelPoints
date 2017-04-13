@@ -35,27 +35,22 @@ public class FuelEconomyController {
         DataList listOfMakes = retrieveList("make?year=" + year);
 
         return rootSerializer.serializeOne(
-                "/makes?year=" + year,
+                "/make?year=" + year,
                 listOfMakes,
                 dataListSerializer);
     }
-//
-//    @RequestMapping(path = "/models", method = RequestMethod.GET)
-//    public HashMap<String, Object> models(HttpServletResponse response, @RequestBody RootParser<DataList> parser) throws IOException {
-//
-//            //todo: no to below - this is two requestparams
-//            //todo: create object class like menuItem to get this requestbody
-//
-//        String urlExtension = "make?year=" + parser.getData().getEntity().getDataList().get(0) + "&make=" + parser.getData().getEntity().getDataList().get(1);
-//
-//        DataList dataList = retrieveList(urlExtension);
-//
-//
-//        return rootSerializer.serializeMany(
-//                "/years/" + "",
-//                dataList.getDataList(),
-//                dataListSerializer);
-//    }
+
+    @RequestMapping(path = "/models", method = RequestMethod.GET)
+    public HashMap<String, Object> models(HttpServletResponse response, @RequestParam(value = "year") String year, @RequestParam (value = "make") String make) throws IOException {
+
+        String urlExtension = "model?year=" + year + "&make=" + make;
+        DataList listOfModels = retrieveList(urlExtension);
+
+        return rootSerializer.serializeOne(
+                "/model?year"+ year +"&make="+ make +"/" + "",
+                listOfModels,
+                dataListSerializer);
+    }
 //
 //    @RequestMapping(path = "/account/vehicles/options", method = RequestMethod.GET)
 //    public HashMap<String, Object> options(HttpServletResponse response) throws IOException {
