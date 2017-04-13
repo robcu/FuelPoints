@@ -22,13 +22,13 @@ public class Vehicle implements HasId {
     String model;
 
     @Column
-    Integer year;   //todo: make string?
+    String year;   //todo: make string?
 
     @Column
     String option;
 
     @Column
-    Integer fuelEconomyId;
+    String fuelEconomyId;
 
     @ManyToOne
     User user;
@@ -36,11 +36,11 @@ public class Vehicle implements HasId {
     public Vehicle() {
     }
 
-    public Vehicle(String make, String model, Integer year, String option, Integer fuelEconomyId, User user) {
+    public Vehicle(String year, String make, String model, String fuelEconomyId, User user) {
         this.make = make;
         this.model = model;
         this.year = year;
-        this.option = option;
+       // this.option = option;
         this.fuelEconomyId = fuelEconomyId;
         this.user = user;
     }
@@ -70,11 +70,11 @@ public class Vehicle implements HasId {
         this.model = model;
     }
 
-    public Integer getYear() {
+    public String getYear() {
         return year;
     }
 
-    public void setYear(Integer year) {
+    public void setYear(String year) {
         this.year = year;
     }
 
@@ -94,11 +94,11 @@ public class Vehicle implements HasId {
         this.option = option;
     }
 
-    public Integer getFuelEconomyId() {
+    public String getFuelEconomyId() {
         return fuelEconomyId;
     }
 
-    public void setFuelEconomyId(Integer fuelEconomyId) {
+    public void setFuelEconomyId(String fuelEconomyId) {
         this.fuelEconomyId = fuelEconomyId;
     }
 }

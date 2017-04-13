@@ -1,6 +1,8 @@
 package org.FuelPoints.controllers;
 
+import org.FuelPoints.entities.User;
 import org.FuelPoints.entities.Vehicle;
+import org.FuelPoints.services.UserRepository;
 import org.FuelPoints.services.VehicleRepository;
 import org.FuelPoints.utilities.parsers.RootParser;
 import org.FuelPoints.utilities.serializers.DataListSerializer;
@@ -21,22 +23,22 @@ import static org.FuelPoints.clients.FuelEconomy.retrieveXMLVehicle;
 public class VehicleController {
     @Autowired
     VehicleRepository vehicles;
+    @Autowired
+    UserRepository users;
 
     RootSerializer rootSerializer = new RootSerializer();
     VehicleSerializer vehicleSerializer = new VehicleSerializer();
     DataListSerializer dataListSerializer = new DataListSerializer();
 
     @RequestMapping(path = "/vehicles", method = RequestMethod.POST)
-    public HashMap<String, Object> addVehicle(HttpServletResponse response, @RequestBody RootParser<Vehicle> parser) throws IOException {
-        Vehicle vehicle = new Vehicle();
-        //todo: i need "user" from front
+    public HashMap<String, Object> addVehicle(HttpServletResponse response, @RequestParam(value = "vehicleId") String vehicleId, @RequestParam(value = "userId") String userId) throws IOException {
 
-        XMLVehicle xmlVehicle = retrieveXMLVehicle(parser.getData().getId());
+        User user = users.findOne(userId);
+        XMLVehicle xmlVehicle = retrieveXMLVehicle(vehicleId);    //TODO: the vehicle record page does not contain a field "option". How to get it here?
 
-        //todo: save vehicle
-//      vehicles.save(new Vehicle(vehicle.getMake(), vehicle.getModel(), vehicle.getYear(), vehicle.getUser()));
-//      vehicles.save(vehicle);
-        response.sendError(201, "Vehicle added.");
+      Vehicle vehicle = new Vehicle(xmlVehicle.getYear(), xmlVehicle.getMake(), xmlVehicle.getModel(), vehicleId, user);
+      vehicles.save(vehicle);
+      //response.sendError(201, "Vehicle added.");
 
         return rootSerializer.serializeOne(
                 "/vehicles/" + vehicle.getId(),
@@ -44,7 +46,7 @@ public class VehicleController {
                 vehicleSerializer);
     }
 
-    @RequestMapping(path = "/vehicles/[id]", method = RequestMethod.GET)
+    @RequestMapping(path = "/vehicles/{id}", method = RequestMethod.GET)
     public void retrieveVehiclesList(HttpServletResponse response, @PathVariable String id)
     {
         //todo: return a users vehicles
