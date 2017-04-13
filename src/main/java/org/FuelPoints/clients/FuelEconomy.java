@@ -1,6 +1,6 @@
 package org.FuelPoints.clients;
 
-import org.FuelPoints.utilities.DataList;
+import org.FuelPoints.entities.DataList;
 import org.FuelPoints.vessels.MenuItem;
 import org.FuelPoints.vessels.MenuItems;
 import org.FuelPoints.vessels.XMLVehicle;
@@ -15,7 +15,6 @@ import java.util.ArrayList;
 public class FuelEconomy {
 
     public static String BASE_URL = "http://www.fueleconomy.gov/ws/rest/vehicle/menu/";
-
 
     public static DataList retrieveList(String urlExtension) throws IOException {
         RestTemplate restTemplate = new RestTemplate();

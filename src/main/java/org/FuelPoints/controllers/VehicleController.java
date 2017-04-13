@@ -2,7 +2,6 @@ package org.FuelPoints.controllers;
 
 import org.FuelPoints.entities.Vehicle;
 import org.FuelPoints.services.VehicleRepository;
-import org.FuelPoints.utilities.DataList;
 import org.FuelPoints.utilities.parsers.RootParser;
 import org.FuelPoints.utilities.serializers.DataListSerializer;
 import org.FuelPoints.utilities.serializers.RootSerializer;
@@ -15,13 +14,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
 
-import static org.FuelPoints.clients.FuelEconomy.retrieveList;
-import static org.FuelPoints.clients.FuelEconomy.retrieveOptionsAndVehicleNumbers;
 import static org.FuelPoints.clients.FuelEconomy.retrieveXMLVehicle;
 
 @CrossOrigin(origins = "*") //TODO: Lock down to deployed prod domain
 @RestController
-public class VehiclesController {
+public class VehicleController {
     @Autowired
     VehicleRepository vehicles;
 
@@ -47,6 +44,12 @@ public class VehiclesController {
                 vehicleSerializer);
     }
 
+    @RequestMapping(path = "/vehicles/[id]", method = RequestMethod.GET)
+    public void retrieveVehiclesList(HttpServletResponse response, @PathVariable String id)
+    {
+        //todo: return a users vehicles
+    }
+
     @RequestMapping(path = "/vehicles/{id}", method = RequestMethod.DELETE)
     public void deleteVehicle(HttpServletResponse response, @PathVariable String id) throws IOException {
         Vehicle vehicle = vehicles.findOne(id);
@@ -58,6 +61,6 @@ public class VehiclesController {
         }
     }
 
-
+    //todo: add route that returns a list of a users vehicles
 
 }

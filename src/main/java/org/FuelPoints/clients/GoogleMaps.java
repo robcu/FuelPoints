@@ -1,9 +1,13 @@
 package org.FuelPoints.clients;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import org.FuelPoints.entities.Trip;
 import org.FuelPoints.vessels.googlemaps.DirectionsResult;
 import org.FuelPoints.vessels.googlemaps.Route;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.HashMap;
 
 public class GoogleMaps {
 
@@ -20,6 +24,24 @@ public class GoogleMaps {
         return result;
     }
 
+    public static void retrieveNativeList(String urlExtension)  {
+        RestTemplate restTemplate = new RestTemplate();
+
+        String json = "";
+        JsonParser parser = new JsonParser();
+        JsonObject rootObj = parser.parse(json).getAsJsonObject();
+        JsonObject locObj = rootObj.getAsJsonObject("result").getAsJsonObject("geometry").getAsJsonObject("location");
+
+        String status = rootObj.get("status").getAsString();
+        String lat = locObj.get("lat").getAsString();
+        String lng = locObj.get("lng").getAsString();
+
+        System.out.printf("Status: %s, Latitude: %s, Longitude: %s\n", status,
+                lat, lng);
+
+
+    }
+
 // A trip is a route that a User has chosen.
 // This method should be called when a User saves a Route to their history.
 
@@ -30,6 +52,8 @@ public class GoogleMaps {
             //todo: conversion
         }
 
-        return ;
+
     }
+
+
 }

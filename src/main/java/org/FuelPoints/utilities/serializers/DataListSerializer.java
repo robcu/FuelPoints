@@ -1,7 +1,7 @@
 package org.FuelPoints.utilities.serializers;
 
 import org.FuelPoints.utilities.HasId;
-import org.FuelPoints.utilities.DataList;
+import org.FuelPoints.entities.DataList;
 
 import java.util.HashMap;
 import java.util.Map;

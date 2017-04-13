@@ -1,26 +1,24 @@
-package org.FuelPoints.utilities;
+package org.FuelPoints.entities;
 
-import org.FuelPoints.utilities.HasId;
 import org.hibernate.annotations.GenericGenerator;
+import org.FuelPoints.utilities.HasId;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.util.ArrayList;
+import java.util.List;
 
 public class DataList implements HasId {
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid")
+
     String id;
 
-    ArrayList<String> dataList;
+    ArrayList<String> dataList = new ArrayList<>();
 
     public DataList() {
     }
 
     public void add(String string){
-        this.dataList.add(string);
+        dataList.add(string);
     }
 
     public DataList(ArrayList<String> dataList) {

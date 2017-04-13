@@ -11,16 +11,13 @@ import org.FuelPoints.services.UserRepository;
 import org.FuelPoints.services.VehicleRepository;
 import org.FuelPoints.utilities.PasswordStorage;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
 
-
+@CrossOrigin(origins = "*") //TODO: Lock down to deployed prod domain
 @RestController
 public class UserController {
     @Autowired
