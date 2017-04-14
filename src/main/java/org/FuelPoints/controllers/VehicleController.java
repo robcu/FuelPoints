@@ -34,7 +34,7 @@ public class VehicleController {
     public HashMap<String, Object> addVehicle(HttpServletResponse response, @RequestParam(value = "vehicleId") String vehicleId, @RequestParam(value = "userId") String userId) throws IOException {
 
         User user = users.findOne(userId);
-        XMLVehicle xmlVehicle = retrieveXMLVehicle(vehicleId);    //TODO: the vehicle record page does not contain a field "option". How to get it here?
+        XMLVehicle xmlVehicle = retrieveXMLVehicle(vehicleId);    //TODO: the vehicle record page does not contain a field "option". How to get it here? Do I need it?
 
       Vehicle vehicle = new Vehicle(xmlVehicle.getYear(), xmlVehicle.getMake(), xmlVehicle.getModel(), vehicleId, user);
       vehicles.save(vehicle);

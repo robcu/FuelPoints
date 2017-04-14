@@ -24,8 +24,8 @@ public class Vehicle implements HasId {
     @Column
     String year;   //todo: make string?
 
-    @Column
-    String option;
+//    @Column
+//    String option;
 
     @Column
     String fuelEconomyId;
@@ -86,13 +86,13 @@ public class Vehicle implements HasId {
         this.user = user;
     }
 
-    public String getOption() {
-        return option;
-    }
-
-    public void setOption(String option) {
-        this.option = option;
-    }
+//    public String getOption() {
+//        return option;
+//    }
+//
+//    public void setOption(String option) {
+//        this.option = option;
+//    }
 
     public String getFuelEconomyId() {
         return fuelEconomyId;
