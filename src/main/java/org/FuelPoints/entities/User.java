@@ -1,7 +1,6 @@
 package org.FuelPoints.entities;
 
 import org.FuelPoints.utilities.HasId;
-import org.FuelPoints.utilities.PasswordStorage;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -30,9 +29,9 @@ public class User implements HasId {
         this.name = name;
     }
 
-    public User(String name, String password) throws PasswordStorage.CannotPerformOperationException {
+    public User(String name, String password) {
         this.name = name;
-        setPassword(password);
+        this.password = password;
     }
 
     @Override
@@ -44,12 +43,12 @@ public class User implements HasId {
         this.id = id;
     }
 
-    private String getPasswordHash() {
+    public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password) throws PasswordStorage.CannotPerformOperationException {
-        this.password = PasswordStorage.createHash(password);
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getName() {
@@ -60,7 +59,5 @@ public class User implements HasId {
         this.name = name;
     }
 
-    public Boolean verifyPassword(String password) throws PasswordStorage.InvalidHashException, PasswordStorage.CannotPerformOperationException {
-        return PasswordStorage.verifyPassword(password, getPasswordHash());
-    }
+
 }

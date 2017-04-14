@@ -7,7 +7,6 @@ import org.FuelPoints.vessels.XMLVehicle;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 
 //todo: get mpg data for a vehicle, add field to classes
@@ -33,7 +32,6 @@ public class FuelEconomy {
 
         return mi;
     }
-
 
     public static XMLVehicle retrieveXMLVehicle(String id) {
 

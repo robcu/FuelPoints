@@ -1,5 +1,6 @@
 package org.FuelPoints.entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.FuelPoints.utilities.HasId;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -11,8 +12,8 @@ public class Vehicle implements HasId {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(generator="system-uuid")
-    @GenericGenerator(name="system-uuid", strategy = "uuid")
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
     String id;
 
     @Column
@@ -28,6 +29,7 @@ public class Vehicle implements HasId {
 //    String option;
 
     @Column
+    @JsonProperty("fuel-ecomomy-id")
     String fuelEconomyId;
 
     @ManyToOne
@@ -40,7 +42,7 @@ public class Vehicle implements HasId {
         this.make = make;
         this.model = model;
         this.year = year;
-       // this.option = option;
+        // this.option = option;
         this.fuelEconomyId = fuelEconomyId;
         this.user = user;
     }
@@ -50,7 +52,7 @@ public class Vehicle implements HasId {
         return id;
     }
 
-    public void setId(String id){
+    public void setId(String id) {
         this.id = id;
     }
 
