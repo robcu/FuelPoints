@@ -1,6 +1,5 @@
 package org.FuelPoints.utilities.serializers;
 
-import org.FuelPoints.entities.DataList;
 import org.FuelPoints.utilities.HasId;
 import org.FuelPoints.vessels.MenuItems;
 

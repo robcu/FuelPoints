@@ -1,4 +1,4 @@
-package org.FuelPoints.entities;
+package org.FuelPoints.vessels;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.FuelPoints.utilities.HasId;

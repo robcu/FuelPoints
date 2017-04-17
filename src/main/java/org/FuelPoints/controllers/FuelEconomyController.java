@@ -1,17 +1,14 @@
 package org.FuelPoints.controllers;
 
-import org.FuelPoints.entities.DataList;
-import org.FuelPoints.utilities.HasId;
+import org.FuelPoints.vessels.DataList;
 import org.FuelPoints.utilities.serializers.DataListSerializer;
 import org.FuelPoints.utilities.serializers.MenuItemsSerializer;
 import org.FuelPoints.utilities.serializers.RootSerializer;
-import org.FuelPoints.vessels.MenuItem;
 import org.FuelPoints.vessels.MenuItems;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import static org.FuelPoints.clients.FuelEconomy.retrieveList;

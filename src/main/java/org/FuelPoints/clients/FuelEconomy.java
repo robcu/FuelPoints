@@ -1,6 +1,6 @@
 package org.FuelPoints.clients;
 
-import org.FuelPoints.entities.DataList;
+import org.FuelPoints.vessels.DataList;
 import org.FuelPoints.vessels.MenuItem;
 import org.FuelPoints.vessels.MenuItems;
 import org.FuelPoints.vessels.XMLVehicle;

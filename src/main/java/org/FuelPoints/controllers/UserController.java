@@ -3,7 +3,6 @@ package org.FuelPoints.controllers;
 import org.FuelPoints.utilities.parsers.RootParser;
 import org.FuelPoints.utilities.serializers.RootSerializer;
 import org.FuelPoints.utilities.serializers.UserSerializer;
-import org.FuelPoints.vessels.JsonUser;
 import org.FuelPoints.entities.User;
 import org.FuelPoints.services.TripRepository;
 import org.FuelPoints.services.UserRepository;
@@ -33,32 +32,16 @@ public class UserController {
     RootSerializer rootSerializer = new RootSerializer();
     UserSerializer userSerializer = new UserSerializer();
 
-//    @RequestMapping(path = "/login", method = RequestMethod.POST)
-//    public HashMap<String, Object> login(HttpServletResponse response, @RequestBody RootParser<JsonUser> jsonUser) throws Exception {
-//
-//        User user = users.findFirstByName(jsonUser.getData().getEntity().getName());
-//        if (user == null) {
-//            response.sendError(401, "Account does not exist.");
-//        } else if (!user.verifyPassword(jsonUser.getData().getEntity().getPassword())) {
-//            response.sendError(401, "Invalid credentials");
-//        }
-//        return rootSerializer.serializeOne(
-//                "/users/" + user.getId(),
-//                user,
-//                userSerializer);
-//    }
 
     @RequestMapping(path = "/users", method = RequestMethod.POST)
-    public HashMap<String, Object> register(HttpServletResponse response, @RequestBody RootParser<JsonUser> parser) throws IOException {
-        JsonUser jsonUser = parser.getData().getEntity();
-        //TODO: check for null
+    public HashMap<String, Object> register(HttpServletResponse response, @RequestBody RootParser<User> parser) throws IOException {
+        User passedUser = parser.getData().getEntity();
 
-        //TODO: try
-        User user = users.findFirstByName(jsonUser.getName());
+        User user = users.findFirstByName(passedUser.getName());
         if (user != null) {
             response.sendError(401, "Username is not available.");
         } else {
-            user = new User(jsonUser.getName(), bCryptPasswordEncoder.encode(jsonUser.getPassword()));
+            user = new User(passedUser.getName(), bCryptPasswordEncoder.encode(passedUser.getPassword()));
             users.save(user);
             response.setStatus(201);
         }
@@ -80,6 +63,21 @@ public class UserController {
                 user,
                 userSerializer);
     }
+
+//    @RequestMapping(path = "/login", method = RequestMethod.POST)
+//    public HashMap<String, Object> login(HttpServletResponse response, @RequestBody RootParser<User> parser) throws Exception {
+//
+//        User user = users.findFirstByName(parser.getData().getEntity().getName());
+//        if (user == null) {
+//            response.sendError(401, "Account does not exist.");
+//        } else if (!user.verifyPassword(parser.getData().getEntity().getPassword())) {
+//            response.sendError(401, "Invalid credentials");
+//        }
+//        return rootSerializer.serializeOne(
+//                "/users/" + user.getId(),
+//                user,
+//                userSerializer);
+//    }
 
 }
 
