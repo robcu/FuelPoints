@@ -45,14 +45,17 @@ public class GoogleMaps {
 // A trip is a route that a User has chosen.
 // This method should be called when a User saves a Route to their history.
 
-    public static void convertDirectionsResultToTrip(DirectionsResult result){
-        //result.getRoutes().get(0).getLeg().getDistance();
+    public static Trip convertDirectionsResultToTrip(DirectionsResult result){
+
+        Trip trip = new Trip();
         for(Route route : result.getRoutes()){
+            trip.setOrigin(route.getLeg().getStart_address().toString());
+            trip.setDestination(route.getLeg().getEnd_address().toString());
 
-            //todo: conversion
+            trip.setTotalDistance(route.getLeg().getDistance().getValue());
+            trip.setTotalDuration(route.getLeg().getDuration().getValue());
         }
-
-
+        return trip;
     }
 
 

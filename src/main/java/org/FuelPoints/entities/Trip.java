@@ -1,31 +1,35 @@
 package org.FuelPoints.entities;
 
+import org.FuelPoints.utilities.HasId;
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "trips")
-public class Trip {
-    @Id
-    @GeneratedValue
-    String id;
+public class Trip implements HasId {
+    private static final long serialVersionUID = 1L;
 
+    @Id
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
+    String id;
     @Column
     String origin;
-
     @Column
     String destination;
-
     @Column
     Double totalDistance;
-
+    @Column
+    Double totalDuration;
     @Column
     Double fuelBurned;
-
     @Column
     Double emissions;
-
     @Column
-    Float fuelPrice;
+    Float fuelGallonPrice;
+    @Column
+    Double totalFuelPrice;
 
     @ManyToOne
     User user;
@@ -49,6 +53,7 @@ public class Trip {
         this.vehicle = vehicle;
     }
 
+    @Override
     public String getId() {
         return id;
     }
@@ -93,12 +98,12 @@ public class Trip {
         this.emissions = emissions;
     }
 
-    public Float getFuelPrice() {
-        return fuelPrice;
+    public Float getFuelGallonPrice() {
+        return fuelGallonPrice;
     }
 
-    public void setFuelPrice(Float fuelPrice) {
-        this.fuelPrice = fuelPrice;
+    public void setFuelGallonPrice(Float fuelPrice) {
+        this.fuelGallonPrice = fuelPrice;
     }
 
     public User getUser() {
@@ -115,5 +120,21 @@ public class Trip {
 
     public void setVehicle(Vehicle vehicle) {
         this.vehicle = vehicle;
+    }
+
+    public Double getTotalDuration() {
+        return totalDuration;
+    }
+
+    public void setTotalDuration(Double totalDuration) {
+        this.totalDuration = totalDuration;
+    }
+
+    public Double getTotalFuelPrice() {
+        return totalFuelPrice;
+    }
+
+    public void setTotalFuelPrice() {
+        this.totalFuelPrice = fuelGallonPrice * fuelBurned;
     }
 }

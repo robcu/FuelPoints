@@ -6,9 +6,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class Distance {
 
     String text;
-    String value;
+    Double value;
 
-    public Distance(String text, String value) {
+    public Distance(String text, Double value) {
         this.text = text;
         this.value = value;
     }
@@ -24,11 +24,11 @@ public class Distance {
         this.text = text;
     }
 
-    public String getValue() {
+    public Double getValue() {
         return value;
     }
 
-    public void setValue(String value) {
+    public void setValue(Double value) {
         this.value = value;
     }
 }
