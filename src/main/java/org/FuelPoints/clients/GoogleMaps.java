@@ -7,6 +7,7 @@ import org.FuelPoints.vessels.googlemaps.DirectionsResult;
 import org.FuelPoints.vessels.googlemaps.Route;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class GoogleMaps {
@@ -24,38 +25,20 @@ public class GoogleMaps {
         return result;
     }
 
-//    public static void retrieveNativeList(String urlExtension)  {
-//        RestTemplate restTemplate = new RestTemplate();
-//
-//        String json = "";
-//        JsonParser parser = new JsonParser();
-//        JsonObject rootObj = parser.parse(json).getAsJsonObject();
-//        JsonObject locObj = rootObj.getAsJsonObject("result").getAsJsonObject("geometry").getAsJsonObject("location");
-//
-//        String status = rootObj.get("status").getAsString();
-//        String lat = locObj.get("lat").getAsString();
-//        String lng = locObj.get("lng").getAsString();
-//
-//        System.out.printf("Status: %s, Latitude: %s, Longitude: %s\n", status,
-//                lat, lng);
-//
-//
-//    }
-
 // A trip is a route that a User has chosen.
 // This method should be called when a User saves a Route to their history.
 
-    public static Trip convertDirectionsResultToTrip(DirectionsResult result){
-
+    public static ArrayList<Trip> convertDirectionsResultToTrips(DirectionsResult result) {
+        ArrayList<Trip> listOfTrips = new ArrayList<>();
         Trip trip = new Trip();
-        for(Route route : result.getRoutes()){
+        for (Route route : result.getRoutes()) {
             trip.setOrigin(route.getLeg().getStart_address().toString());
             trip.setDestination(route.getLeg().getEnd_address().toString());
-
             trip.setTotalDistance(route.getLeg().getDistance().getValue());
             trip.setTotalDuration(route.getLeg().getDuration().getValue());
+            listOfTrips.add(trip);
         }
-        return trip;
+        return listOfTrips;
     }
 
 

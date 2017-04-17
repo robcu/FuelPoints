@@ -1,9 +1,11 @@
 package org.FuelPoints.entities;
 
 import org.FuelPoints.utilities.HasId;
+import org.FuelPoints.vessels.MenuItems;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 
 @Entity
 @Table(name = "users")
@@ -20,6 +22,8 @@ public class User implements HasId {
 
     @Column(nullable = false)
     private String password;
+
+    MenuItems optionsCache;
 
 
     public User() {
@@ -59,5 +63,11 @@ public class User implements HasId {
         this.name = name;
     }
 
+    public MenuItems getOptionsCache() {
+        return optionsCache;
+    }
 
+    public void setOptionsCache(MenuItems optionsCache) {
+        this.optionsCache = optionsCache;
+    }
 }

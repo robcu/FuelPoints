@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import static org.FuelPoints.clients.GoogleMaps.convertDirectionsResultToTrip;
+import static org.FuelPoints.clients.GoogleMaps.convertDirectionsResultToTrips;
 
 @CrossOrigin(origins = "*") //TODO: Lock down to deployed prod domain
 @RestController
@@ -36,12 +36,13 @@ public class TripController {
 
     @RequestMapping(path = "/trips", method = RequestMethod.POST)
     public HashMap<String, Object> addTrip(HttpServletResponse response, @RequestBody DirectionsResult directionsResult,
-                                           @RequestParam(value = "vehicleId") String vehicleId){
+                                           @RequestParam(value = "vehicleId") String vehicleId,
+                                           @RequestParam(value = "tripIndex") Integer tripIndex) {
 
         Authentication u = SecurityContextHolder.getContext().getAuthentication();
         User user = users.findFirstByName(u.getName());
 
-        Trip trip = convertDirectionsResultToTrip(directionsResult);
+        Trip trip = convertDirectionsResultToTrips(directionsResult).get(tripIndex);
         trip.setUser(user);
 
         Vehicle vehicle = vehicles.findOne(vehicleId);
@@ -58,7 +59,7 @@ public class TripController {
 
     @RequestMapping(path = "/trips", method = RequestMethod.GET)
     public HashMap<String, Object> retrieveTrip(HttpServletResponse response,
-                                                @RequestParam(value = "tripId") String tripId){
+                                                @RequestParam(value = "tripId") String tripId) {
         Trip trip = trips.findOne(tripId);
 
         return rootSerializer.serializeOne(
@@ -69,7 +70,7 @@ public class TripController {
 
     @RequestMapping(path = "/trips/vehicle", method = RequestMethod.GET)
     public HashMap<String, Object> retrieveVehiclesTrips(HttpServletResponse response,
-                                                         @RequestParam(value = "vehicleId") String vehicleId){
+                                                         @RequestParam(value = "vehicleId") String vehicleId) {
         Vehicle vehicle = vehicles.findOne(vehicleId);
         ArrayList<Trip> listOfTrips = trips.findAllByVehicle(vehicle);
 
@@ -80,7 +81,7 @@ public class TripController {
     }
 
     @RequestMapping(path = "/trips/user", method = RequestMethod.GET)
-    public HashMap<String, Object> retrieveUsersTrips(HttpServletResponse response){
+    public HashMap<String, Object> retrieveUsersTrips(HttpServletResponse response) {
 
         Authentication u = SecurityContextHolder.getContext().getAuthentication();
         User user = users.findFirstByName(u.getName());
@@ -105,7 +106,7 @@ public class TripController {
 
     @RequestMapping(path = "/trips", method = RequestMethod.DELETE)
     public void deleteTrip(HttpServletResponse response,
-                                                @RequestParam(value = "tripId") String tripId){
+                           @RequestParam(value = "tripId") String tripId) {
         trips.delete(tripId);
         //todo: add try/catch and setStatus
 

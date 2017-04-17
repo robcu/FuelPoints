@@ -41,7 +41,7 @@ public class Trip implements HasId {
     public Trip() {
     }
 
-    public Trip(String origin, String destination){
+    public Trip(String origin, String destination) {
         this.origin = origin;
         this.destination = destination;
     }

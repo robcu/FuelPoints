@@ -35,17 +35,18 @@ public class VehicleController {
     @RequestMapping(path = "/vehicles", method = RequestMethod.POST)
     public HashMap<String, Object> addVehicle(HttpServletResponse response,
                                               @RequestParam(value = "feId") String feId,
-                                              @RequestParam(value = "userId") String userId) throws IOException {
+                                              @RequestParam(value = "optionIndex") Integer optionIndex) throws IOException {
 
         //TODO: the vehicle record page does not contain a field "option". How to get it here? Do I need it?
 
-        User user = users.findOne(userId);
-        System.out.println(user.getName());
-
+        Authentication u = SecurityContextHolder.getContext().getAuthentication();
+        User user = users.findFirstByName(u.getName());
 
         XMLVehicle xmlVehicle = retrieveXMLVehicle(feId);
 
-        Vehicle vehicle = new Vehicle(xmlVehicle.getYear(), xmlVehicle.getMake(), xmlVehicle.getModel(), feId, user);
+        String option = user.getOptionsCache().getMenuItems().get(optionIndex).getText();
+
+        Vehicle vehicle = new Vehicle(xmlVehicle.getYear(), xmlVehicle.getMake(), xmlVehicle.getModel(), option, feId, user);
         vehicles.save(vehicle);
         //response.sendError(201, "Vehicle added.");
 

@@ -1,10 +1,15 @@
 package org.FuelPoints.controllers;
 
+import org.FuelPoints.entities.User;
+import org.FuelPoints.services.UserRepository;
 import org.FuelPoints.vessels.DataList;
 import org.FuelPoints.utilities.serializers.DataListSerializer;
 import org.FuelPoints.utilities.serializers.MenuItemsSerializer;
 import org.FuelPoints.utilities.serializers.RootSerializer;
 import org.FuelPoints.vessels.MenuItems;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -17,6 +22,8 @@ import static org.FuelPoints.clients.FuelEconomy.retrieveOptionsAndVehicleNumber
 @CrossOrigin(origins = "*") //TODO: Lock down to deployed prod domain
 @RestController
 public class FuelEconomyController {
+    @Autowired
+    UserRepository users;
 
     RootSerializer rootSerializer = new RootSerializer();
     DataListSerializer dataListSerializer = new DataListSerializer();
@@ -68,8 +75,15 @@ public class FuelEconomyController {
         String urlExtension = "options?year="+ year +"&make="+ make +"&model="+ model;
         MenuItems listOfOptions = retrieveOptionsAndVehicleNumbers(urlExtension);
 
+        Authentication u = SecurityContextHolder.getContext().getAuthentication();
+        User user = users.findFirstByName(u.getName());
+
+        user.setOptionsCache(listOfOptions);
+
+        //todo: capture option that user selects - i don't know it until addVehicle (VehicleController) is called
+
         return rootSerializer.serializeOne(
-                "/option?year"+ year +"&make="+ make +"&model="+ model +"/" + "",
+                "/option?year"+ year +"&make="+ make +"&model="+ model +"/options",
                 listOfOptions,
                 menuItemsSerializer);
     }

@@ -25,8 +25,8 @@ public class Vehicle implements HasId {
     @Column
     String year;   //todo: make string?
 
-//    @Column
-//    String option;
+    @Column
+    String option;
 
     @Column
     @JsonProperty("fuel-ecomomy-id")
@@ -38,11 +38,11 @@ public class Vehicle implements HasId {
     public Vehicle() {
     }
 
-    public Vehicle(String year, String make, String model, String fuelEconomyId, User user) {
+    public Vehicle(String year, String make, String model, String fuelEconomyId, String option, User user) {
         this.make = make;
         this.model = model;
         this.year = year;
-        // this.option = option;
+        this.option = option;
         this.fuelEconomyId = fuelEconomyId;
         this.user = user;
     }
@@ -88,13 +88,13 @@ public class Vehicle implements HasId {
         this.user = user;
     }
 
-//    public String getOption() {
-//        return option;
-//    }
-//
-//    public void setOption(String option) {
-//        this.option = option;
-//    }
+    public String getOption() {
+        return option;
+    }
+
+    public void setOption(String option) {
+        this.option = option;
+    }
 
     public String getFuelEconomyId() {
         return fuelEconomyId;
