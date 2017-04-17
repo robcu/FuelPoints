@@ -24,6 +24,7 @@ public class TripSerializer extends JsonDataSerializer {
         result.put("fuel-burned", trip.getFuelBurned());
         result.put("co2-emissions", trip.getEmissions());
 
+        //todo: adding user (not password), vehicle
 
 
 

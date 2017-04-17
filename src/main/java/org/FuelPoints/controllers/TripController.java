@@ -93,6 +93,16 @@ public class TripController {
                 tripSerializer);
     }
 
+    @RequestMapping(path = "/trips/global", method = RequestMethod.GET)
+    public HashMap<String, Object> retrieveALLTrips(HttpServletResponse response) {
+        ArrayList<Trip> listOfTrips = (ArrayList<Trip>) trips.findAll();
+
+        return rootSerializer.serializeMany(
+                "/trips/" + "",
+                listOfTrips,
+                tripSerializer);
+    }
+
     @RequestMapping(path = "/trips", method = RequestMethod.DELETE)
     public void deleteTrip(HttpServletResponse response,
                                                 @RequestParam(value = "tripId") String tripId){
