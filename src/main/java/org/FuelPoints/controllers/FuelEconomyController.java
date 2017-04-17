@@ -34,7 +34,8 @@ public class FuelEconomyController {
     }
 
     @RequestMapping(path = "/makes", method = RequestMethod.GET)
-    public HashMap<String, Object> makes(HttpServletResponse response, @RequestParam(value = "year") String year) throws IOException {
+    public HashMap<String, Object> makes(HttpServletResponse response,
+                                         @RequestParam(value = "year") String year) throws IOException {
 
         DataList listOfMakes = retrieveList("make?year=" + year);
 
@@ -45,7 +46,9 @@ public class FuelEconomyController {
     }
 
     @RequestMapping(path = "/models", method = RequestMethod.GET)
-    public HashMap<String, Object> models(HttpServletResponse response, @RequestParam(value = "year") String year, @RequestParam (value = "make") String make) throws IOException {
+    public HashMap<String, Object> models(HttpServletResponse response,
+                                          @RequestParam(value = "year") String year,
+                                          @RequestParam (value = "make") String make) throws IOException {
 
         String urlExtension = "model?year=" + year + "&make=" + make;
         DataList listOfModels = retrieveList(urlExtension);
@@ -57,7 +60,10 @@ public class FuelEconomyController {
     }
 
     @RequestMapping(path = "/options", method = RequestMethod.GET)
-    public HashMap<String, Object> options(HttpServletResponse response, @RequestParam(value = "year") String year, @RequestParam (value = "make") String make, @RequestParam (value = "model") String model) throws IOException {
+    public HashMap<String, Object> options(HttpServletResponse response,
+                                           @RequestParam(value = "year") String year,
+                                           @RequestParam (value = "make") String make,
+                                           @RequestParam (value = "model") String model) throws IOException {
 
         String urlExtension = "options?year="+ year +"&make="+ make +"&model="+ model;
         MenuItems listOfOptions = retrieveOptionsAndVehicleNumbers(urlExtension);

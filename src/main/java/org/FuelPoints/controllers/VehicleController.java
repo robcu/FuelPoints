@@ -9,6 +9,8 @@ import org.FuelPoints.utilities.serializers.RootSerializer;
 import org.FuelPoints.utilities.serializers.VehicleSerializer;
 import org.FuelPoints.vessels.XMLVehicle;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -32,15 +34,18 @@ public class VehicleController {
 
     @RequestMapping(path = "/vehicles", method = RequestMethod.POST)
     public HashMap<String, Object> addVehicle(HttpServletResponse response,
-                                              @RequestParam(value = "vehicleId") String vehicleId,
+                                              @RequestParam(value = "feId") String feId,
                                               @RequestParam(value = "userId") String userId) throws IOException {
 
         //TODO: the vehicle record page does not contain a field "option". How to get it here? Do I need it?
 
         User user = users.findOne(userId);
-        XMLVehicle xmlVehicle = retrieveXMLVehicle(vehicleId);
+        System.out.println(user.getName());
 
-        Vehicle vehicle = new Vehicle(xmlVehicle.getYear(), xmlVehicle.getMake(), xmlVehicle.getModel(), vehicleId, user);
+
+        XMLVehicle xmlVehicle = retrieveXMLVehicle(feId);
+
+        Vehicle vehicle = new Vehicle(xmlVehicle.getYear(), xmlVehicle.getMake(), xmlVehicle.getModel(), feId, user);
         vehicles.save(vehicle);
         //response.sendError(201, "Vehicle added.");
 
@@ -50,18 +55,23 @@ public class VehicleController {
                 vehicleSerializer);
     }
 
-    @RequestMapping(path = "/vehicles/{id}", method = RequestMethod.GET)
-    public HashMap<String, Object> retrieveVehiclesList(HttpServletResponse response, @PathVariable String userId) {
-        ArrayList<Vehicle> usersVehicles = vehicles.findAllByUser(userId);
+    //todo: add route to return ONE vehicle belonging to a user? useful for getting associated trips
+
+
+    @RequestMapping(path = "/vehicles", method = RequestMethod.GET)
+    public HashMap<String, Object> retrieveVehicleList(HttpServletResponse response) {
+        Authentication u = SecurityContextHolder.getContext().getAuthentication();
+        User user = users.findFirstByName(u.getName());
+        ArrayList<Vehicle> usersVehicles = vehicles.findAllByUser(user);
 
         return rootSerializer.serializeMany(
-                "/vehicles/" + userId,
+                "/vehicles/" + user.getId(),
                 usersVehicles,
                 vehicleSerializer);
     }
 
-    @RequestMapping(path = "/vehicles/{id}", method = RequestMethod.DELETE)
-    public void deleteVehicle(HttpServletResponse response, @PathVariable String vehicleId) throws IOException {
+    @RequestMapping(path = "/vehicles", method = RequestMethod.DELETE)
+    public void deleteVehicle(HttpServletResponse response, @RequestParam(value = "vehicleId") String vehicleId) throws IOException {
         Vehicle vehicle = vehicles.findOne(vehicleId);
         if (vehicle != null) {
             vehicles.delete(vehicleId);

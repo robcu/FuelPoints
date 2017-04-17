@@ -64,21 +64,6 @@ public class UserController {
                 userSerializer);
     }
 
-//    @RequestMapping(path = "/login", method = RequestMethod.POST)
-//    public HashMap<String, Object> login(HttpServletResponse response, @RequestBody RootParser<User> parser) throws Exception {
-//
-//        User user = users.findFirstByName(parser.getData().getEntity().getName());
-//        if (user == null) {
-//            response.sendError(401, "Account does not exist.");
-//        } else if (!user.verifyPassword(parser.getData().getEntity().getPassword())) {
-//            response.sendError(401, "Invalid credentials");
-//        }
-//        return rootSerializer.serializeOne(
-//                "/users/" + user.getId(),
-//                user,
-//                userSerializer);
-//    }
-
 }
 
 
