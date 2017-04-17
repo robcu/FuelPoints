@@ -6,7 +6,6 @@ import org.FuelPoints.entities.Vehicle;
 import org.FuelPoints.services.TripRepository;
 import org.FuelPoints.services.UserRepository;
 import org.FuelPoints.services.VehicleRepository;
-import org.FuelPoints.utilities.parsers.RootParser;
 import org.FuelPoints.utilities.serializers.RootSerializer;
 import org.FuelPoints.utilities.serializers.TripSerializer;
 import org.FuelPoints.vessels.googlemaps.DirectionsResult;
@@ -68,7 +67,7 @@ public class TripController {
                 tripSerializer);
     }
 
-    @RequestMapping(path = "/trips", method = RequestMethod.GET)
+    @RequestMapping(path = "/trips/vehicle", method = RequestMethod.GET)
     public HashMap<String, Object> retrieveVehiclesTrips(HttpServletResponse response,
                                                          @RequestParam(value = "vehicleId") String vehicleId){
         Vehicle vehicle = vehicles.findOne(vehicleId);
@@ -80,7 +79,7 @@ public class TripController {
                 tripSerializer);
     }
 
-    @RequestMapping(path = "/trips", method = RequestMethod.GET)
+    @RequestMapping(path = "/trips/user", method = RequestMethod.GET)
     public HashMap<String, Object> retrieveUsersTrips(HttpServletResponse response){
 
         Authentication u = SecurityContextHolder.getContext().getAuthentication();
@@ -92,5 +91,13 @@ public class TripController {
                 "/trips/" + user.getId(),
                 listOfTrips,
                 tripSerializer);
+    }
+
+    @RequestMapping(path = "/trips", method = RequestMethod.DELETE)
+    public void deleteTrip(HttpServletResponse response,
+                                                @RequestParam(value = "tripId") String tripId){
+        trips.delete(tripId);
+        //todo: add try/catch and setStatus
+
     }
 }
