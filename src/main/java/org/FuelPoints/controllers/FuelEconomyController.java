@@ -79,8 +79,7 @@ public class FuelEconomyController {
         User user = users.findFirstByName(u.getName());
 
         user.setOptionsCache(listOfOptions);
-
-        //todo: capture option that user selects - i don't know it until addVehicle (VehicleController) is called
+        users.save(user);       //todo: does this change a user's id?
 
         return rootSerializer.serializeOne(
                 "/option?year"+ year +"&make="+ make +"&model="+ model +"/options",

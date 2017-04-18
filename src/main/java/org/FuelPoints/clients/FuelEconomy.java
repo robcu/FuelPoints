@@ -9,8 +9,6 @@ import org.springframework.web.client.RestTemplate;
 import java.io.IOException;
 
 
-//todo: get mpg data for a vehicle, add field to classes
-
 public class FuelEconomy {
 
     public static String BASE_URL = "http://www.fueleconomy.gov/ws/rest/vehicle/menu/";
@@ -34,12 +32,9 @@ public class FuelEconomy {
     }
 
     public static XMLVehicle retrieveXMLVehicle(String id) {
-
         RestTemplate restTemplate = new RestTemplate();
         XMLVehicle xmlVehicle = restTemplate.getForObject("http://www.fueleconomy.gov/ws/rest/vehicle/" + id, XMLVehicle.class);
-        //System.out.println(xmlVehicle.getMake() + ", " + xmlVehicle.getModel() + ", " + xmlVehicle.getYear());
 
-        //todo: convert to regular vehicle? would need user info
         return xmlVehicle;
     }
 }

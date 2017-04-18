@@ -23,14 +23,26 @@ public class Vehicle implements HasId {
     String model;
 
     @Column
-    String year;   //todo: make string?
+    String year;
 
     @Column
     String option;
 
     @Column
-    @JsonProperty("fuel-ecomomy-id")
+    @JsonProperty("fuel-economy-id")
     String fuelEconomyId;
+
+    @Column
+    @JsonProperty("city-mpg")
+    Double cityMPG;
+
+    @Column
+    @JsonProperty("hwy-mpg")
+    Double hwyMPG;
+
+    @Column
+    @JsonProperty("comb-mpg")
+    Double combMPG;
 
     @ManyToOne
     User user;
@@ -38,16 +50,18 @@ public class Vehicle implements HasId {
     public Vehicle() {
     }
 
-    public Vehicle(String year, String make, String model, String fuelEconomyId, String option, User user) {
+    public Vehicle(String make, String model, String year, String option, String fuelEconomyId, Double cityMPG, Double hwyMPG, Double combMPG, User user) {
         this.make = make;
         this.model = model;
         this.year = year;
         this.option = option;
         this.fuelEconomyId = fuelEconomyId;
+        this.cityMPG = cityMPG;
+        this.hwyMPG = hwyMPG;
+        this.combMPG = combMPG;
         this.user = user;
     }
 
-    @Override
     public String getId() {
         return id;
     }

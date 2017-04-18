@@ -37,18 +37,18 @@ public class VehicleController {
                                               @RequestParam(value = "feId") String feId,
                                               @RequestParam(value = "optionIndex") Integer optionIndex) throws IOException {
 
-        //TODO: the vehicle record page does not contain a field "option". How to get it here? Do I need it?
-
         Authentication u = SecurityContextHolder.getContext().getAuthentication();
         User user = users.findFirstByName(u.getName());
 
         XMLVehicle xmlVehicle = retrieveXMLVehicle(feId);
 
+        //todo: i know the feid so i know the optionindex - i can redo the line below - filter, match, for each
         String option = user.getOptionsCache().getMenuItems().get(optionIndex).getText();
 
-        Vehicle vehicle = new Vehicle(xmlVehicle.getYear(), xmlVehicle.getMake(), xmlVehicle.getModel(), option, feId, user);
+        Vehicle vehicle = new Vehicle(xmlVehicle.getYear(), xmlVehicle.getMake(), xmlVehicle.getModel(),
+                option, feId, xmlVehicle.getCityMPG(), xmlVehicle.getHwyMPG(), xmlVehicle.getCombMPG(), user);
         vehicles.save(vehicle);
-        //response.sendError(201, "Vehicle added.");
+        //response.setStatus(201, "Vehicle added.");
 
         return rootSerializer.serializeOne(
                 "/vehicles/" + vehicle.getId(),
@@ -56,7 +56,7 @@ public class VehicleController {
                 vehicleSerializer);
     }
 
-    //todo: add route to return ONE vehicle belonging to a user? useful for getting associated trips
+    //todo: add route to return ONE vehicle belonging to a user? useful for getting associated trips? use the vehicle id to search trips
 
 
     @RequestMapping(path = "/vehicles", method = RequestMethod.GET)
