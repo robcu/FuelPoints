@@ -18,13 +18,14 @@ public class GoogleMaps {
     private static String BASE_URL = "https://maps.googleapis.com/maps/api/directions/json?origin=";
 
     public static DirectionsResult retrieveDirections(String origin, String destination) {
-
         RestTemplate restTemplate = new RestTemplate();
         DirectionsResult result = restTemplate.getForObject(BASE_URL + origin + "&destination=" + destination + "&alternatives=true&key=" + YOUR_API_KEY, DirectionsResult.class);
+        return result;
+    }
 
-//        for (Route route : result.getRoutes()) {
-//            System.out.println(route.getLegs().get(0).getDistance().getText());
-//        }
+    public static String retrieveJsonDirections(String origin, String destination){
+        RestTemplate restTemplate = new RestTemplate();
+        String result = restTemplate.getForObject(BASE_URL + origin + "&destination=" + destination + "&alternatives=true&key=" + YOUR_API_KEY, String.class);
         return result;
     }
 
@@ -32,7 +33,7 @@ public class GoogleMaps {
         ArrayList<Trip> listOfTrips = new ArrayList<>();
         Trip trip = new Trip();
         for (Route route : result.getRoutes()) {
-            trip.setOrigin(route.getLegs().get(0).getStart_address().toString());
+            trip.setOrigin(route.getLegs().get(0).getStart_address().toString());       //todo: do some routes have multiple legs? reconcile
             trip.setDestination(route.getLegs().get(0).getEnd_address().toString());
             trip.setTotalDistance(route.getLegs().get(0).getDistance().getValue());
             trip.setTotalDuration(route.getLegs().get(0).getDuration().getValue());

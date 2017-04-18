@@ -40,6 +40,8 @@ public class TripController {
                                            @RequestParam(value = "tripIndex") Integer tripIndex,
                                            @RequestParam(value = "price") Float price) {
 
+        //todo: i think this route will take the json string directions and need to be parsed into a DR.
+
         Authentication u = SecurityContextHolder.getContext().getAuthentication();
         User user = users.findFirstByName(u.getName());
 

@@ -16,8 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
 
-import static org.FuelPoints.clients.FuelEconomy.retrieveList;
-import static org.FuelPoints.clients.FuelEconomy.retrieveOptionsAndVehicleNumbers;
+import org.FuelPoints.clients.FuelEconomy;
 
 @CrossOrigin(origins = "*") //TODO: Lock down to deployed prod domain
 @RestController
@@ -32,7 +31,7 @@ public class FuelEconomyController {
     @RequestMapping(path = "/years", method = RequestMethod.GET)
     public HashMap<String, Object> years(HttpServletResponse response) throws IOException {
 
-        DataList years = retrieveList("year");
+        DataList years = FuelEconomy.retrieveList("year");
 
         return rootSerializer.serializeOne(
                 "/years/" + years.getId(),
@@ -44,7 +43,7 @@ public class FuelEconomyController {
     public HashMap<String, Object> makes(HttpServletResponse response,
                                          @RequestParam(value = "year") String year) throws IOException {
 
-        DataList listOfMakes = retrieveList("make?year=" + year);
+        DataList listOfMakes = FuelEconomy.retrieveList("make?year=" + year);
 
         return rootSerializer.serializeOne(
                 "/make?year=" + year,
@@ -58,7 +57,7 @@ public class FuelEconomyController {
                                           @RequestParam (value = "make") String make) throws IOException {
 
         String urlExtension = "model?year=" + year + "&make=" + make;
-        DataList listOfModels = retrieveList(urlExtension);
+        DataList listOfModels = FuelEconomy.retrieveList(urlExtension);
 
         return rootSerializer.serializeOne(
                 "/model?year"+ year +"&make="+ make +"/" + "",
@@ -73,7 +72,7 @@ public class FuelEconomyController {
                                            @RequestParam (value = "model") String model) throws IOException {
 
         String urlExtension = "options?year="+ year +"&make="+ make +"&model="+ model;
-        MenuItems listOfOptions = retrieveOptionsAndVehicleNumbers(urlExtension);
+        MenuItems listOfOptions = FuelEconomy.retrieveOptionsAndVehicleNumbers(urlExtension);
 
         Authentication u = SecurityContextHolder.getContext().getAuthentication();
         User user = users.findFirstByName(u.getName());

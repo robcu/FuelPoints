@@ -8,4 +8,5 @@ import java.util.ArrayList;
 
 public interface VehicleRepository extends CrudRepository<Vehicle, String> {
     ArrayList<Vehicle> findAllByUser(User user);
+    ArrayList<Vehicle> findFirstByFuelEconomyId (String feId);
 }
