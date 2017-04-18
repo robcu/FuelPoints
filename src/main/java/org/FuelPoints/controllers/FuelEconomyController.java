@@ -5,8 +5,10 @@ import org.FuelPoints.services.UserRepository;
 import org.FuelPoints.vessels.DataList;
 import org.FuelPoints.utilities.serializers.DataListSerializer;
 import org.FuelPoints.utilities.serializers.MenuItemsSerializer;
+import org.FuelPoints.utilities.serializers.YearSerializer;
 import org.FuelPoints.utilities.serializers.RootSerializer;
 import org.FuelPoints.vessels.MenuItems;
+import org.FuelPoints.vessels.Year;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.FuelPoints.clients.FuelEconomy;
@@ -25,18 +28,24 @@ public class FuelEconomyController {
     UserRepository users;
 
     RootSerializer rootSerializer = new RootSerializer();
+    YearSerializer yearSerializer = new YearSerializer();
     DataListSerializer dataListSerializer = new DataListSerializer();
     MenuItemsSerializer menuItemsSerializer = new MenuItemsSerializer();
 
     @RequestMapping(path = "/years", method = RequestMethod.GET)
     public HashMap<String, Object> years(HttpServletResponse response) throws IOException {
 
-        DataList years = FuelEconomy.retrieveList("year");
+        DataList yearResults = FuelEconomy.retrieveList("year");
+        ArrayList<Year> years = new ArrayList<>();
 
-        return rootSerializer.serializeOne(
-                "/years/" + years.getId(),
+        for (String year : yearResults.getDataList()) {
+                years.add(new Year(year));
+        }
+
+        return rootSerializer.serializeMany(
+                "/years/",
                 years,
-                dataListSerializer);
+                yearSerializer);
     }
 
     @RequestMapping(path = "/makes", method = RequestMethod.GET)
