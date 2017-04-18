@@ -37,12 +37,11 @@ public class TripController {
     @RequestMapping(path = "/trips", method = RequestMethod.POST)
     public HashMap<String, Object> addTrip(HttpServletResponse response, @RequestBody DirectionsResult directionsResult,
                                            @RequestParam(value = "vehicleId") String vehicleId,
-                                           @RequestParam(value = "tripIndex") Integer tripIndex) {
+                                           @RequestParam(value = "tripIndex") Integer tripIndex,
+                                           @RequestParam(value = "price") Float price) {
 
         Authentication u = SecurityContextHolder.getContext().getAuthentication();
         User user = users.findFirstByName(u.getName());
-
-        //todo: what is the necessary param to hit google with to get multiple routes?
 
         Trip trip = convertDirectionsResultToTrips(directionsResult).get(tripIndex);
         trip.setUser(user);
@@ -50,8 +49,9 @@ public class TripController {
         Vehicle vehicle = vehicles.findOne(vehicleId);
         trip.setVehicle(vehicle);
 
+        trip.setFuelGallonPrice(price);
+
         trips.save(trip);
-        //todo: where do I get fuel price? do I need it here?
 
         return rootSerializer.serializeOne(
                 "/trips/" + trip.getId(),

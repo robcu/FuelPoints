@@ -18,7 +18,6 @@ public class FuelPointsApplication {
 		SpringApplication.run(FuelPointsApplication.class, args);
 
 		//retrieveDirections("Nashville,TN", "Los+Angeles,CA");
-
 	}
 
     @Bean

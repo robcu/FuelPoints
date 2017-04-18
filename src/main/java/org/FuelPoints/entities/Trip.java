@@ -104,6 +104,9 @@ public class Trip implements HasId {
 
     public void setFuelGallonPrice(Float fuelPrice) {
         this.fuelGallonPrice = fuelPrice;
+        setFuelBurned(((totalDistance * 3.2808) / 5280) / vehicle.getCombMPG());    //todo: allow for cityMPG and hwyMPG
+        setTotalFuelPrice(fuelPrice * this.fuelBurned);
+        setEmissions(this.fuelBurned * 8887);
     }
 
     public User getUser() {
@@ -134,7 +137,7 @@ public class Trip implements HasId {
         return totalFuelPrice;
     }
 
-    public void setTotalFuelPrice() {
-        this.totalFuelPrice = fuelGallonPrice * fuelBurned;
+    public void setTotalFuelPrice(Double totalFuelPrice) {
+        this.totalFuelPrice = totalFuelPrice;
     }
 }
