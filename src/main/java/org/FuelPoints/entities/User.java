@@ -38,7 +38,6 @@ public class User implements HasId {
         this.password = password;
     }
 
-    @Override
     public String getId() {
         return id;
     }

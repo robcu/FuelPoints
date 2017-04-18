@@ -18,15 +18,6 @@ public class XMLVehicle {
     @XmlElement(name = "comb08U")
     Double combMPG;
 
-
-
-//    public XMLVehicle(String make, String model, String year) {
-//        this.make = make;
-//        this.model = model;
-//        this.year = year;
-//
-//    }
-
     public XMLVehicle() {
     }
 

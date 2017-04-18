@@ -79,7 +79,7 @@ public class FuelEconomyController {
         User user = users.findFirstByName(u.getName());
 
         user.setOptionsCache(listOfOptions);
-        users.save(user);       //todo: does this change a user's id?
+        users.save(user);                           //todo: does this change a user's id?
 
         return rootSerializer.serializeOne(
                 "/option?year"+ year +"&make="+ make +"&model="+ model +"/options",

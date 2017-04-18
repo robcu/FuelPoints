@@ -7,6 +7,7 @@ import org.FuelPoints.services.VehicleRepository;
 import org.FuelPoints.utilities.serializers.DataListSerializer;
 import org.FuelPoints.utilities.serializers.RootSerializer;
 import org.FuelPoints.utilities.serializers.VehicleSerializer;
+import org.FuelPoints.vessels.MenuItem;
 import org.FuelPoints.vessels.XMLVehicle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -30,25 +31,24 @@ public class VehicleController {
 
     RootSerializer rootSerializer = new RootSerializer();
     VehicleSerializer vehicleSerializer = new VehicleSerializer();
-    DataListSerializer dataListSerializer = new DataListSerializer();
 
     @RequestMapping(path = "/vehicles", method = RequestMethod.POST)
     public HashMap<String, Object> addVehicle(HttpServletResponse response,
-                                              @RequestParam(value = "feId") String feId,
-                                              @RequestParam(value = "optionIndex") Integer optionIndex) throws IOException {
+                                              @RequestParam(value = "feId") String feId) throws IOException {
 
         Authentication u = SecurityContextHolder.getContext().getAuthentication();
         User user = users.findFirstByName(u.getName());
 
         XMLVehicle xmlVehicle = retrieveXMLVehicle(feId);
 
-        //todo: i know the feid so i know the optionindex - i can redo the line below - filter, match, for each
-        String option = user.getOptionsCache().getMenuItems().get(optionIndex).getText();
+        String optionText = "";
+        for (MenuItem option : user.getOptionsCache().getMenuItems()) {
+            if (option.getId() == feId) optionText = option.getText();
+        }
 
         Vehicle vehicle = new Vehicle(xmlVehicle.getYear(), xmlVehicle.getMake(), xmlVehicle.getModel(),
-                option, feId, xmlVehicle.getCityMPG(), xmlVehicle.getHwyMPG(), xmlVehicle.getCombMPG(), user);
+                optionText, feId, xmlVehicle.getCityMPG(), xmlVehicle.getHwyMPG(), xmlVehicle.getCombMPG(), user);
         vehicles.save(vehicle);
-        //response.setStatus(201, "Vehicle added.");
 
         return rootSerializer.serializeOne(
                 "/vehicles/" + vehicle.getId(),

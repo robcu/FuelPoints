@@ -42,6 +42,8 @@ public class TripController {
         Authentication u = SecurityContextHolder.getContext().getAuthentication();
         User user = users.findFirstByName(u.getName());
 
+        //todo: what is the necessary param to hit google with to get multiple routes?
+
         Trip trip = convertDirectionsResultToTrips(directionsResult).get(tripIndex);
         trip.setUser(user);
 
@@ -108,7 +110,7 @@ public class TripController {
     public void deleteTrip(HttpServletResponse response,
                            @RequestParam(value = "tripId") String tripId) {
         trips.delete(tripId);
-        //todo: add try/catch and setStatus
+        //todo: add setStatus
 
     }
 }
