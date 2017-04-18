@@ -17,7 +17,7 @@ public class FuelPointsApplication {
 	public static void main(String[] args) throws IOException {
 		SpringApplication.run(FuelPointsApplication.class, args);
 
-		//retrieveDirections("Nashville,TN", "Los+Angeles,CA", "Joplin,MO|Oklahoma+City,OK");
+		//retrieveDirections("Nashville,TN", "Los+Angeles,CA");
 
 	}
 

@@ -117,4 +117,28 @@ public class Vehicle implements HasId {
     public void setFuelEconomyId(String fuelEconomyId) {
         this.fuelEconomyId = fuelEconomyId;
     }
+
+    public Double getCityMPG() {
+        return cityMPG;
+    }
+
+    public void setCityMPG(Double cityMPG) {
+        this.cityMPG = cityMPG;
+    }
+
+    public Double getHwyMPG() {
+        return hwyMPG;
+    }
+
+    public void setHwyMPG(Double hwyMPG) {
+        this.hwyMPG = hwyMPG;
+    }
+
+    public Double getCombMPG() {
+        return combMPG;
+    }
+
+    public void setCombMPG(Double combMPG) {
+        this.combMPG = combMPG;
+    }
 }

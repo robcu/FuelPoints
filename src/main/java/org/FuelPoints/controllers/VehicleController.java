@@ -43,7 +43,7 @@ public class VehicleController {
 
         String optionText = "";
         for (MenuItem option : user.getOptionsCache().getMenuItems()) {
-            if (option.getId() == feId) optionText = option.getText();
+            if (option.getId().equals(feId)) optionText = option.getText();
         }
 
         Vehicle vehicle = new Vehicle(xmlVehicle.getYear(), xmlVehicle.getMake(), xmlVehicle.getModel(),

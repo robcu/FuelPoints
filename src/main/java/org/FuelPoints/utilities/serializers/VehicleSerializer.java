@@ -21,8 +21,11 @@ public class VehicleSerializer extends JsonDataSerializer {
         result.put("year", vehicle.getYear());
         result.put("make", vehicle.getMake());
         result.put("model", vehicle.getModel());
-//        result.put("option", vehicle.getOption());
+        result.put("option", vehicle.getOption());
         result.put("fuel-economy-id", vehicle.getFuelEconomyId());
+        result.put("city-mpg", vehicle.getCityMPG());
+        result.put("hwy-mpg", vehicle.getHwyMPG());
+        result.put("comb-mpg", vehicle.getCombMPG());
         result.put("user-id", vehicle.getUser().getId());
 
         return result;

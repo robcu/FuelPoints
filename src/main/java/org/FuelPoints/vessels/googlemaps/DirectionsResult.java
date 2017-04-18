@@ -1,12 +1,16 @@
 package org.FuelPoints.vessels.googlemaps;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class DirectionsResult {
+
     ArrayList<Route> routes;
+
     String status;
 
     public DirectionsResult() {

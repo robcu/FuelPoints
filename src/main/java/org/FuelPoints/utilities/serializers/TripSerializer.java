@@ -23,10 +23,8 @@ public class TripSerializer extends JsonDataSerializer {
         result.put("total-duration", trip.getTotalDuration());
         result.put("fuel-burned", trip.getFuelBurned());
         result.put("co2-emissions", trip.getEmissions());
-
-        //todo: adding user (not password), vehicle
-
-
+        result.put("user-id", trip.getUser().getId());
+        result.put("vehicle-id", trip.getVehicle().getId());
 
         return result;
     }

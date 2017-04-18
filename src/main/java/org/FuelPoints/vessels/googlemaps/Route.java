@@ -2,26 +2,27 @@ package org.FuelPoints.vessels.googlemaps;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.util.ArrayList;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Route {
-    Leg leg;                    //todo: does a route ever contain multiple legs? if so, replace with ArrayList<Leg> legs;
+    ArrayList<Leg> legs;
     String summary;
 
-    public Route(Leg leg, String summary) {
-        this.leg = leg;
+    public Route() {
+    }
+
+    public Route(ArrayList<Leg> legs, String summary) {
+        this.legs = legs;
         this.summary = summary;
     }
 
-    public Route() {
-
+    public ArrayList<Leg> getLegs() {
+        return legs;
     }
 
-    public Leg getLeg() {
-        return leg;
-    }
-
-    public void setLeg(Leg leg) {
-        this.leg = leg;
+    public void setLegs(ArrayList<Leg> legs) {
+        this.legs = legs;
     }
 
     public String getSummary() {
