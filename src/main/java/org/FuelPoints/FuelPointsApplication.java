@@ -1,5 +1,6 @@
 package org.FuelPoints;
 
+import org.FuelPoints.clients.FuelEconomy;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -18,7 +19,11 @@ public class FuelPointsApplication {
 		SpringApplication.run(FuelPointsApplication.class, args);
 
 		//retrieveDirections("Nashville,TN", "Los+Angeles,CA");
-	}
+
+        FuelEconomy.retrieveXMLVehicle("33261");
+        FuelEconomy.retrieveXMLVehicle("33261");
+
+    }
 
     @Bean
     public WebMvcConfigurer corsConfigurer() {

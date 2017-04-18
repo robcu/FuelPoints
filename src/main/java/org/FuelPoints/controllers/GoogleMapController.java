@@ -24,32 +24,32 @@ public class GoogleMapController {
     @Autowired
     VehicleRepository vehicles;
 
-    @RequestMapping(path = "/direction-results", method = RequestMethod.POST)
-    public String findDirections(HttpServletResponse response, @RequestParam(value = "origin") String origin,
-                                 @RequestParam(value = "destination") String destination,
-                                 @RequestParam(value = "price") Float price) throws IOException {
-
-        String json = retrieveJsonDirections(origin, destination);
-        Gson gson = new Gson();
-        DirectionsResult directionsResult = gson.fromJson(json, DirectionsResult.class);
-        ArrayList<Trip> trips = GoogleMaps.convertDirectionsResultToTrips(directionsResult);
-
-        ArrayList<Vehicle> vehiclesList = new ArrayList<>();
-        vehicles.
-        for (Trip trip : trips) {
-            trip.setVehicle();
-            trip.setFuelGallonPrice(price);
-
-        }
-
-        //todo: return json string, and list of trips with one vehicle.
-
-        //todo: create masterUser who has 3 vehicles so the vehicles are already in DB and have a userid (no null error)
-
-
-        //i want to return a serialized class containing the json string, plus my extra data. a DirectionResponse
-        //the extra data is for the table:
-        return retrieveJsonDirections(origin, destination);
-    }
-
+//    @RequestMapping(path = "/direction-results", method = RequestMethod.POST)
+//    public String findDirections(HttpServletResponse response, @RequestParam(value = "origin") String origin,
+//                                 @RequestParam(value = "destination") String destination,
+//                                 @RequestParam(value = "price") Float price) throws IOException {
+//
+//        String json = retrieveJsonDirections(origin, destination);
+//        Gson gson = new Gson();
+//        DirectionsResult directionsResult = gson.fromJson(json, DirectionsResult.class);
+//        ArrayList<Trip> trips = GoogleMaps.convertDirectionsResultToTrips(directionsResult);
+//
+//        ArrayList<Vehicle> vehiclesList = new ArrayList<>();
+//        vehicles.
+//        for (Trip trip : trips) {
+//            trip.setVehicle();
+//            trip.setFuelGallonPrice(price);
+//
+//        }
+//
+//        //todo: return json string, and list of trips with one vehicle.
+//
+//        //todo: create masterUser who has 3 vehicles so the vehicles are already in DB and have a userid (no null error)
+//
+//
+//        //i want to return a serialized class containing the json string, plus my extra data. a DirectionResponse
+//        //the extra data is for the table:
+//        return retrieveJsonDirections(origin, destination);
+//    }
+//
 }

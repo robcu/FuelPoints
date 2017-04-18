@@ -18,46 +18,55 @@ import org.springframework.web.filter.CorsFilter;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-  @Bean
-  public BCryptPasswordEncoder bCryptPasswordEncoder() {
-    return new BCryptPasswordEncoder();
-  }
+    @Bean
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
-  @Autowired
-  private UserDetailsService userDetailsService;
+    @Autowired
+    private UserDetailsService userDetailsService;
 
-  @Override
-  protected void configure(HttpSecurity http) throws Exception {
-    http.csrf().disable()
-      // Don't create sessions
-      .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.csrf().disable()
+                // Don't create sessions
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 
-      // Set permissions for URLS
-      .authorizeRequests()
-      // Allow registration without being logged in
-      .antMatchers(HttpMethod.POST, "/users")
-      .permitAll()
-      // Allow login without being logged in
-      .antMatchers(HttpMethod.POST, "/login")
-      .permitAll()
-      // All other requests must be authenticated
-      .anyRequest()
-      .authenticated().and()
-      .cors().and()
-      // Adds login route
-      .addFilterBefore(new JWTLoginFilter("/login", authenticationManager()),
-              UsernamePasswordAuthenticationFilter.class)
-      .cors().and()
-      // Checks for Authorization token JWT
-      .addFilterBefore(new JWTAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
-  }
-  
-  @Autowired
-  public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-    auth
-            // Use our UserDetailsService to lookup user by username
-            .userDetailsService(userDetailsService)
-            // Use bcrypt to check passwords
-            .passwordEncoder(bCryptPasswordEncoder());
-  }
+                // Set permissions for URLS
+                .authorizeRequests()
+                // Allow registration without being logged in
+                .antMatchers(HttpMethod.POST, "/users")
+                .permitAll()
+                // Allow login without being logged in
+                .antMatchers(HttpMethod.POST, "/login")
+                .permitAll()
+                //allow fueleconomy routes to be hit without being logged in
+                .antMatchers(HttpMethod.POST, "/years")
+                .permitAll()
+                .antMatchers(HttpMethod.POST, "/makes")
+                .permitAll()
+                .antMatchers(HttpMethod.POST, "/models")
+                .permitAll()
+                .antMatchers(HttpMethod.POST, "/options")
+                .permitAll()
+                // All other requests must be authenticated
+                .anyRequest()
+                .authenticated().and()
+                .cors().and()
+                // Adds login route
+                .addFilterBefore(new JWTLoginFilter("/login", authenticationManager()),
+                        UsernamePasswordAuthenticationFilter.class)
+                .cors().and()
+                // Checks for Authorization token JWT
+                .addFilterBefore(new JWTAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+    }
+
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth
+                // Use our UserDetailsService to lookup user by username
+                .userDetailsService(userDetailsService)
+                // Use bcrypt to check passwords
+                .passwordEncoder(bCryptPasswordEncoder());
+    }
 }
