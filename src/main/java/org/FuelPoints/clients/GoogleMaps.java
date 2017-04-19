@@ -23,18 +23,19 @@ public class GoogleMaps {
         return result;
     }
 
-    public static String retrieveJsonDirections(String origin, String destination){
+    public static Object retrieveJsonDirections(String origin, String destination){
         RestTemplate restTemplate = new RestTemplate();
-        String result = restTemplate.getForObject(BASE_URL + origin + "&destination=" + destination + "&alternatives=true&key=" + YOUR_API_KEY, String.class);
+        Object result = restTemplate.getForObject(BASE_URL + origin + "&destination=" + destination + "&alternatives=true&key=" + YOUR_API_KEY, Object.class);
         return result;
     }
 
     public static ArrayList<Trip> convertDirectionsResultToTrips(DirectionsResult result) {
         ArrayList<Trip> listOfTrips = new ArrayList<>();
-        Trip trip = new Trip();
+
         for (Route route : result.getRoutes()) {
-            trip.setOrigin(route.getLegs().get(0).getStart_address().toString());       //todo: do some routes have multiple legs? reconcile
-            trip.setDestination(route.getLegs().get(0).getEnd_address().toString());
+            Trip trip = new Trip();
+            trip.setOrigin(route.getLegs().get(0).getStart_address());       //todo: do some routes have multiple legs? reconcile
+            trip.setDestination(route.getLegs().get(0).getEnd_address());
             trip.setTotalDistance(route.getLegs().get(0).getDistance().getValue());
             trip.setTotalDuration(route.getLegs().get(0).getDuration().getValue());
             listOfTrips.add(trip);

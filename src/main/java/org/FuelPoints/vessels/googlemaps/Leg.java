@@ -7,13 +7,13 @@ public class Leg {
 
     Distance distance;
     Duration duration;
-    End_address end_address;            //todo: drop address classes and replace with strings of same name? test
-    Start_address start_address;
+    String end_address;
+    String start_address;
 
     public Leg() {
     }
 
-    public Leg(Distance distance, Duration duration, End_address end_address, Start_address start_address) {
+    public Leg(Distance distance, Duration duration, String end_address, String start_address) {
         this.distance = distance;
         this.duration = duration;
         this.end_address = end_address;
@@ -36,19 +36,19 @@ public class Leg {
         this.duration = duration;
     }
 
-    public End_address getEnd_address() {
+    public String getEnd_address() {
         return end_address;
     }
 
-    public void setEnd_address(End_address end_address) {
+    public void setEnd_address(String end_address) {
         this.end_address = end_address;
     }
 
-    public Start_address getStart_address() {
+    public String getStart_address() {
         return start_address;
     }
 
-    public void setStart_address(Start_address start_address) {
+    public void setStart_address(String start_address) {
         this.start_address = start_address;
     }
 }

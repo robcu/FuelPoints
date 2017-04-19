@@ -18,12 +18,14 @@ import static org.FuelPoints.clients.GoogleMaps.retrieveDirections;
 @SpringBootApplication
 public class FuelPointsApplication {
 
+    public static ArrayList<Vehicle> vehicleArrayList;
+
 	public static void main(String[] args) throws IOException {
-		SpringApplication.run(FuelPointsApplication.class, args);
 
-		//retrieveDirections("Nashville,TN", "Los+Angeles,CA");
+	    SpringApplication.run(FuelPointsApplication.class, args);
+        vehicleArrayList = FuelEconomy.hardCodeThreeVehicles();
 
-
+        //retrieveDirections("Nashville,TN", "Los+Angeles,CA");
     }
 
     @Bean

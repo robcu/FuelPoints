@@ -50,7 +50,7 @@ public class Vehicle implements HasId {
     public Vehicle() {
     }
 
-    public Vehicle(String make, String model, String year, String option, String fuelEconomyId, Double cityMPG, Double hwyMPG, Double combMPG, User user) {
+    public Vehicle(String year, String make, String model, String option, String fuelEconomyId, Double cityMPG, Double hwyMPG, Double combMPG, User user) {
         this.make = make;
         this.model = model;
         this.year = year;
@@ -62,7 +62,7 @@ public class Vehicle implements HasId {
         this.user = user;
     }
 
-    public Vehicle(String make, String model, String year, String option, String fuelEconomyId, Double cityMPG, Double hwyMPG, Double combMPG) {
+    public Vehicle( String year, String make, String model, String option, String fuelEconomyId, Double cityMPG, Double hwyMPG, Double combMPG) {
         this.make = make;
         this.model = model;
         this.year = year;

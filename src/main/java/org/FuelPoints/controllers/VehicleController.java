@@ -1,5 +1,6 @@
 package org.FuelPoints.controllers;
 
+import org.FuelPoints.FuelPointsApplication;
 import org.FuelPoints.entities.User;
 import org.FuelPoints.entities.Vehicle;
 import org.FuelPoints.services.UserRepository;

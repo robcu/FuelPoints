@@ -37,6 +37,12 @@ public class Trip implements HasId {
     @ManyToOne
     Vehicle vehicle;
 
+    public Trip(Trip trip){
+        this.origin = trip.getOrigin();
+        this.destination = trip.getDestination();
+        this.totalDistance = trip.getTotalDistance();
+        this.totalDuration = trip.getTotalDuration();
+    }
 
     public Trip() {
     }

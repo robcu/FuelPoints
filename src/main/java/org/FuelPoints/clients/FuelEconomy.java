@@ -1,5 +1,6 @@
 package org.FuelPoints.clients;
 
+import org.FuelPoints.FuelPointsApplication;
 import org.FuelPoints.entities.Vehicle;
 import org.FuelPoints.vessels.DataList;
 import org.FuelPoints.vessels.MenuItem;
@@ -61,9 +62,9 @@ public class FuelEconomy {
                 accordOption, accordFEID, three.getCityMPG(), three.getHwyMPG(), three.getCombMPG());
 
         ArrayList<Vehicle> vehiclesList = new ArrayList<>();
-        vehiclesList.add(vehicleThree);
-        vehiclesList.add(vehicleTwo);
         vehiclesList.add(vehicleOne);
+        vehiclesList.add(vehicleTwo);
+        vehiclesList.add(vehicleThree);
 
         return vehiclesList;
     }
