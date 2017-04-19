@@ -1,6 +1,5 @@
 package org.FuelPoints.utilities.serializers;
 
-import apple.laf.JRSUIConstants;
 import org.FuelPoints.utilities.HasId;
 import org.FuelPoints.vessels.DirectionResponse;
 
