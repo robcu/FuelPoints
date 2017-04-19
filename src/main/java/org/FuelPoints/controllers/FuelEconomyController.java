@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.FuelPoints.clients.FuelEconomy;
@@ -29,40 +30,31 @@ public class FuelEconomyController {
     MenuItemsSerializer menuItemsSerializer = new MenuItemsSerializer();
 
     @RequestMapping(path = "/years", method = RequestMethod.GET)
-    public HashMap<String, Object> years(HttpServletResponse response) throws IOException {
+    public ArrayList<String> years(HttpServletResponse response) throws IOException {
 
         DataList years = FuelEconomy.retrieveList("year");
 
-        return rootSerializer.serializeOne(
-                "/years/" + years.getId(),
-                years,
-                dataListSerializer);
+        return years.getDataList();            //todo: easier for front if I serializeMany of a singular object like, year
     }
 
     @RequestMapping(path = "/makes", method = RequestMethod.GET)
-    public HashMap<String, Object> makes(HttpServletResponse response,
-                                         @RequestParam(value = "year") String year) throws IOException {
+    public ArrayList<String> makes(HttpServletResponse response,
+                                   @RequestParam(value = "year") String year) throws IOException {
 
         DataList listOfMakes = FuelEconomy.retrieveList("make?year=" + year);
 
-        return rootSerializer.serializeOne(
-                "/make?year=" + year,
-                listOfMakes,
-                dataListSerializer);
+        return listOfMakes.getDataList();
     }
 
     @RequestMapping(path = "/models", method = RequestMethod.GET)
-    public HashMap<String, Object> models(HttpServletResponse response,
-                                          @RequestParam(value = "year") String year,
-                                          @RequestParam (value = "make") String make) throws IOException {
+    public ArrayList<String> models(HttpServletResponse response,
+                                    @RequestParam(value = "year") String year,
+                                    @RequestParam (value = "make") String make) throws IOException {
 
         String urlExtension = "model?year=" + year + "&make=" + make;
         DataList listOfModels = FuelEconomy.retrieveList(urlExtension);
 
-        return rootSerializer.serializeOne(
-                "/model?year"+ year +"&make="+ make +"/" + "",
-                listOfModels,
-                dataListSerializer);
+        return listOfModels.getDataList();
     }
 
     @RequestMapping(path = "/options", method = RequestMethod.GET)
@@ -78,7 +70,7 @@ public class FuelEconomyController {
         User user = users.findFirstByName(u.getName());
 
         user.setOptionsCache(listOfOptions);
-        users.save(user);                           //todo: does this change a user's id?
+        users.save(user);
 
         return rootSerializer.serializeOne(
                 "/option?year"+ year +"&make="+ make +"&model="+ model +"/options",

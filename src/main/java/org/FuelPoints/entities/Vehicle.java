@@ -62,6 +62,17 @@ public class Vehicle implements HasId {
         this.user = user;
     }
 
+    public Vehicle(String make, String model, String year, String option, String fuelEconomyId, Double cityMPG, Double hwyMPG, Double combMPG) {
+        this.make = make;
+        this.model = model;
+        this.year = year;
+        this.option = option;
+        this.fuelEconomyId = fuelEconomyId;
+        this.cityMPG = cityMPG;
+        this.hwyMPG = hwyMPG;
+        this.combMPG = combMPG;
+    }
+
     public String getId() {
         return id;
     }
