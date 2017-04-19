@@ -6,6 +6,7 @@ import org.FuelPoints.vessels.DataList;
 import org.FuelPoints.utilities.serializers.DataListSerializer;
 import org.FuelPoints.utilities.serializers.MenuItemsSerializer;
 import org.FuelPoints.utilities.serializers.RootSerializer;
+import org.FuelPoints.vessels.MenuItem;
 import org.FuelPoints.vessels.MenuItems;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import org.FuelPoints.clients.FuelEconomy;
 
@@ -58,10 +58,10 @@ public class FuelEconomyController {
     }
 
     @RequestMapping(path = "/options", method = RequestMethod.GET)
-    public HashMap<String, Object> options(HttpServletResponse response,
-                                           @RequestParam(value = "year") String year,
-                                           @RequestParam (value = "make") String make,
-                                           @RequestParam (value = "model") String model) throws IOException {
+    public ArrayList<MenuItem> options(HttpServletResponse response,
+                                       @RequestParam(value = "year") String year,
+                                       @RequestParam (value = "make") String make,
+                                       @RequestParam (value = "model") String model) throws IOException {
 
         String urlExtension = "options?year="+ year +"&make="+ make +"&model="+ model;
         MenuItems listOfOptions = FuelEconomy.retrieveOptionsAndVehicleNumbers(urlExtension);
@@ -72,10 +72,11 @@ public class FuelEconomyController {
         user.setOptionsCache(listOfOptions);
         users.save(user);
 
-        return rootSerializer.serializeOne(
-                "/option?year"+ year +"&make="+ make +"&model="+ model +"/options",
-                listOfOptions,
-                menuItemsSerializer);
+        return listOfOptions.getMenuItems();
+//                rootSerializer.serializeOne(
+//                "/option?year"+ year +"&make="+ make +"&model="+ model +"/options",
+//                listOfOptions,
+//                menuItemsSerializer);
     }
 
 }
