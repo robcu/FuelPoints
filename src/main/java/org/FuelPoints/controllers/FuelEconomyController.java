@@ -34,7 +34,7 @@ public class FuelEconomyController {
 
         DataList years = FuelEconomy.retrieveList("year");
 
-        return years.getDataList();            //todo: easier for front if I serializeMany of a singular object like, year
+        return years.getDataList();
     }
 
     @RequestMapping(path = "/makes", method = RequestMethod.GET)
@@ -73,10 +73,6 @@ public class FuelEconomyController {
         users.save(user);
 
         return listOfOptions.getMenuItems();
-//                rootSerializer.serializeOne(
-//                "/option?year"+ year +"&make="+ make +"&model="+ model +"/options",
-//                listOfOptions,
-//                menuItemsSerializer);
     }
 
 }
