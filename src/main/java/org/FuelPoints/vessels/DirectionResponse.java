@@ -7,8 +7,8 @@ import java.util.ArrayList;
 
 public class DirectionResponse implements HasId{
 
-    String id;
-    String json;
+    String id = "1";
+    Object json;
 
     ArrayList<Trip> tripsWithVehicleOne = new ArrayList<>();
     ArrayList<Trip> tripsWithVehicleTwo = new ArrayList<>();
@@ -67,11 +67,11 @@ public class DirectionResponse implements HasId{
         this.tripsWithVehicleThree = tripsWithVehicleThree;
     }
 
-    public String getJson() {
+    public Object getJson() {
         return json;
     }
 
-    public void setJson(String json) {
+    public void setJson(Object json) {
         this.json = json;
     }
 }
