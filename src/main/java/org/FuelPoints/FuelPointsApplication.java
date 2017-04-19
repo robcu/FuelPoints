@@ -19,7 +19,7 @@ import static org.FuelPoints.clients.GoogleMaps.retrieveDirections;
 public class FuelPointsApplication {
 
 	public static void main(String[] args) throws IOException {
-		//SpringApplication.run(FuelPointsApplication.class, args);
+		SpringApplication.run(FuelPointsApplication.class, args);
 
 		//retrieveDirections("Nashville,TN", "Los+Angeles,CA");
 
