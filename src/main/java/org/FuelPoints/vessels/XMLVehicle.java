@@ -18,6 +18,7 @@ public class XMLVehicle {
     @XmlElement(name = "comb08U")
     Double combMPG;
 
+
     public XMLVehicle() {
     }
 

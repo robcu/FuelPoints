@@ -66,11 +66,11 @@ public class FuelEconomyController {
         String urlExtension = "options?year="+ year +"&make="+ make +"&model="+ model;
         MenuItems listOfOptions = FuelEconomy.retrieveOptionsAndVehicleNumbers(urlExtension);
 
-        Authentication u = SecurityContextHolder.getContext().getAuthentication();
-        User user = users.findFirstByName(u.getName());
-
-        user.setOptionsCache(listOfOptions);
-        users.save(user);
+//        Authentication u = SecurityContextHolder.getContext().getAuthentication();
+//        User user = users.findFirstByName(u.getName());
+//
+//        user.setOptionsCache(listOfOptions);
+//        users.save(user);
 
         return listOfOptions.getMenuItems();
     }

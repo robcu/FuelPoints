@@ -40,13 +40,9 @@ public class VehicleController {
         Authentication u = SecurityContextHolder.getContext().getAuthentication();
         User user = users.findFirstByName(u.getName());
         String feId = parser.getData().getEntity().getFuelEconomyId();
+        String optionText = parser.getData().getEntity().getOption();
 
         XMLVehicle xmlVehicle = retrieveXMLVehicle(feId);
-
-        String optionText = "";
-        for (MenuItem option : user.getOptionsCache().getMenuItems()) {
-            if (option.getId().equals(feId)) optionText = option.getText();
-        }
 
         Vehicle vehicle = new Vehicle(xmlVehicle.getYear(), xmlVehicle.getMake(), xmlVehicle.getModel(),
                 optionText, feId, xmlVehicle.getCityMPG(), xmlVehicle.getHwyMPG(), xmlVehicle.getCombMPG(), user);
