@@ -66,8 +66,8 @@ public class VehicleController {
                 vehicleSerializer);
     }
 
-    @RequestMapping(path = "/vehicles", method = RequestMethod.DELETE)
-    public void deleteVehicle(HttpServletResponse response, @RequestParam(value = "vehicleId") String vehicleId) throws IOException {
+    @RequestMapping(path = "/vehicles/{id}", method = RequestMethod.DELETE)
+    public void deleteVehicle(HttpServletResponse response, @PathVariable(value = "id") String vehicleId) throws IOException {
         Vehicle vehicle = vehicles.findOne(vehicleId);
         if (vehicle != null) {
             vehicles.delete(vehicleId);
