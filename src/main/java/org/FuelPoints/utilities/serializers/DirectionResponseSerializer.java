@@ -14,7 +14,7 @@ public class DirectionResponseSerializer extends JsonDataSerializer {
 
     public Map<String, Object> getAttributes(HasId entity) {
         Map<String, Object> result = new HashMap<>();
-         DirectionResponse directionResponse = (DirectionResponse) entity;
+         DirectionResponse directionResponse = (DirectionResponse) entity;gi
 
         result.put("id", directionResponse.getId());
         result.put("json", directionResponse.getJson());
