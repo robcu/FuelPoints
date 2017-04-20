@@ -39,9 +39,19 @@ public class DirectionsController {
     DirectionResponseSerializer directionResponseSerializer = new DirectionResponseSerializer();
 
     @RequestMapping(path = "/direction-responses", method = RequestMethod.GET)
-    public HashMap<String, Object> findDirectionsForAnonymous(HttpServletResponse response, @RequestParam(value = "origin") String origin,
-                                                              @RequestParam(value = "destination") String destination,
-                                                              @RequestParam(value = "price") Float price) throws IOException {
+    public HashMap<String, Object> findDirections(HttpServletResponse response, @RequestParam(value = "origin") String origin,
+                                                  @RequestParam(value = "destination") String destination,
+                                                  @RequestParam(value = "price") Float price) throws IOException {
+        Authentication u = SecurityContextHolder.getContext().getAuthentication();
+
+        if (u != null) {
+            return findDirectionsForRegisteredUser(response, origin, destination, price);
+        }
+
+        return findDirectionsForAnonymous(response, origin, destination, price);
+    }
+
+    public HashMap<String, Object> findDirectionsForAnonymous(HttpServletResponse response, String origin, String destination, Float price) throws IOException {
 
         Object json = retrieveJsonDirections(origin, destination);
         Gson gson = new Gson();
@@ -76,10 +86,7 @@ public class DirectionsController {
                 directionResponseSerializer);
     }
 
-    @RequestMapping(path = "/direction-responses-user", method = RequestMethod.GET)
-    public HashMap<String, Object> findDirectionsForRegisteredUser(HttpServletResponse response, @RequestParam(value = "origin") String origin,
-                                                                   @RequestParam(value = "destination") String destination,
-                                                                   @RequestParam(value = "price") Float price) throws IOException {
+    public HashMap<String, Object> findDirectionsForRegisteredUser(HttpServletResponse response, String origin, String destination, Float price) throws IOException {
 
         Authentication u = SecurityContextHolder.getContext().getAuthentication();
         User user = users.findFirstByName(u.getName());
