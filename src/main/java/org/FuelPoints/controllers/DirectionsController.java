@@ -76,7 +76,7 @@ public class DirectionsController {
                 directionResponseSerializer);
     }
 
-    @RequestMapping(path = "/direction-results", method = RequestMethod.GET)
+    @RequestMapping(path = "/direction-results-user", method = RequestMethod.GET)
     public HashMap<String, Object> findDirectionsForRegisteredUser(HttpServletResponse response, @RequestParam(value = "origin") String origin,
                                                                    @RequestParam(value = "destination") String destination,
                                                                    @RequestParam(value = "price") Float price) throws IOException {
