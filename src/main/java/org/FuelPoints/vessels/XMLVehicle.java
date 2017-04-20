@@ -13,7 +13,7 @@ public class XMLVehicle {
     String model;
     @XmlElement(name = "city08U")
     Double cityMPG;
-    @XmlElement(name = "hwy08U")
+    @XmlElement(name = "highway08U")
     Double hwyMPG;
     @XmlElement(name = "comb08U")
     Double combMPG;

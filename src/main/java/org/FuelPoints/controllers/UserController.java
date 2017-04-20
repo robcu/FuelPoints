@@ -32,7 +32,6 @@ public class UserController {
     RootSerializer rootSerializer = new RootSerializer();
     UserSerializer userSerializer = new UserSerializer();
 
-
     @RequestMapping(path = "/users", method = RequestMethod.POST)
     public HashMap<String, Object> register(HttpServletResponse response, @RequestBody RootParser<User> parser) throws IOException {
         User passedUser = parser.getData().getEntity();
@@ -49,11 +48,10 @@ public class UserController {
                 "/users/" + user.getId(),
                 user,
                 userSerializer);
-
     }
 
     @RequestMapping(path = "/users/current", method = RequestMethod.GET)
-    public HashMap<String, Object> currentUser(){
+    public HashMap<String, Object> currentUser() {
 
         Authentication u = SecurityContextHolder.getContext().getAuthentication();
         User user = users.findFirstByName(u.getName());
@@ -63,7 +61,6 @@ public class UserController {
                 user,
                 userSerializer);
     }
-
 }
 
 

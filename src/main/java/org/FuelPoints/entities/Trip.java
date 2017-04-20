@@ -23,6 +23,10 @@ public class Trip implements HasId {
     @Column
     Double totalDuration;
     @Column
+    Double miles;
+    @Column
+    String time;
+    @Column
     Double fuelBurned;
     @Column
     Double emissions;
@@ -37,7 +41,7 @@ public class Trip implements HasId {
     @ManyToOne
     Vehicle vehicle;
 
-    public Trip(Trip trip){
+    public Trip(Trip trip) {
         this.origin = trip.getOrigin();
         this.destination = trip.getDestination();
         this.totalDistance = trip.getTotalDistance();
@@ -86,6 +90,7 @@ public class Trip implements HasId {
 
     public void setTotalDistance(Double totalDistance) {
         this.totalDistance = totalDistance;
+        setMiles();
     }
 
     public Double getFuelBurned() {
@@ -137,6 +142,7 @@ public class Trip implements HasId {
 
     public void setTotalDuration(Double totalDuration) {
         this.totalDuration = totalDuration;
+        setTime();
     }
 
     public Double getTotalFuelPrice() {
@@ -145,5 +151,26 @@ public class Trip implements HasId {
 
     public void setTotalFuelPrice(Double totalFuelPrice) {
         this.totalFuelPrice = totalFuelPrice;
+    }
+
+    public Double getMiles() {
+        return miles;
+    }
+
+    public void setMiles() {
+        this.miles = (totalDistance * 3.2808) / 5280;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime() {
+        Double doubleHours = (this.totalDuration / 3600);
+        Integer hours = doubleHours.intValue();
+        Double doubleMinutes = doubleHours - hours;
+        Integer minutes = doubleMinutes.intValue();
+
+        this.time = hours + "h " + minutes + "m";
     }
 }

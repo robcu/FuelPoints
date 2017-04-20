@@ -21,6 +21,8 @@ public class TripSerializer extends JsonDataSerializer {
         result.put("destination", trip.getDestination());
         result.put("total-distance", trip.getTotalDistance());
         result.put("total-duration", trip.getTotalDuration());
+        result.put("miles", trip.getMiles());
+        result.put("time", trip.getTime());
         result.put("fuel-burned", trip.getFuelBurned());
         result.put("fuel-gallon-price", trip.getFuelGallonPrice());
         result.put("total-fuel-price", trip.getTotalFuelPrice());

@@ -57,9 +57,6 @@ public class VehicleController {
                 vehicleSerializer);
     }
 
-    //todo: add route to return ONE vehicle belonging to a user? useful for getting associated trips? use the vehicle id to search trips
-
-
     @RequestMapping(path = "/vehicles", method = RequestMethod.GET)
     public HashMap<String, Object> retrieveVehicleList(HttpServletResponse response) {
         Authentication u = SecurityContextHolder.getContext().getAuthentication();

@@ -33,7 +33,6 @@ public class TripController {
     RootSerializer rootSerializer = new RootSerializer();
     TripSerializer tripSerializer = new TripSerializer();
 
-
     @RequestMapping(path = "/trips", method = RequestMethod.POST)
     public HashMap<String, Object> addTrip(HttpServletResponse response, @RequestParam(value = "vehicleId") String vehicleId,
                                            @RequestParam(value = "tripIndex") Integer tripIndex,
@@ -42,7 +41,7 @@ public class TripController {
         Authentication u = SecurityContextHolder.getContext().getAuthentication();
         User user = users.findFirstByName(u.getName());
 
-        Trip trip = user.getTripCache().get(tripIndex);
+        Trip trip = user.getTripCache().get(tripIndex);     //todo: be sure tripIndex is 0 adjusted
         trip.setUser(user);
         Vehicle vehicle = vehicles.findOne(vehicleId);
         trip.setVehicle(vehicle);
@@ -106,7 +105,5 @@ public class TripController {
     public void deleteTrip(HttpServletResponse response,
                            @RequestParam(value = "tripId") String tripId) {
         trips.delete(tripId);
-        //todo: add setStatus
-
     }
 }
