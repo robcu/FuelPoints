@@ -9,7 +9,7 @@ import java.util.Map;
 public class DirectionResponseSerializer extends JsonDataSerializer {
 
     public String getType() {
-        return "menuItems";
+        return "direction-response";
     }
 
     public Map<String, Object> getAttributes(HasId entity) {

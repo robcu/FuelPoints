@@ -34,7 +34,7 @@ public class GoogleMaps {
 
         for (Route route : result.getRoutes()) {
             Trip trip = new Trip();
-            trip.setOrigin(route.getLegs().get(0).getStart_address());       //todo: do some routes have multiple legs? reconcile
+            trip.setOrigin(route.getLegs().get(0).getStart_address());
             trip.setDestination(route.getLegs().get(0).getEnd_address());
             trip.setTotalDistance(route.getLegs().get(0).getDistance().getValue());
             trip.setTotalDuration(route.getLegs().get(0).getDuration().getValue());
