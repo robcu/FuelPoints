@@ -44,7 +44,9 @@ public class DirectionsController {
                                                   @RequestParam(value = "price") Float price) throws IOException {
         Authentication u = SecurityContextHolder.getContext().getAuthentication();
 
-        if (u != null) {
+        System.out.println(u.getName());
+
+        if (u.getName() != "anonymousUser") {
             return findDirectionsForRegisteredUser(response, origin, destination, price);
         }
 
