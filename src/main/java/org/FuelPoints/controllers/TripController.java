@@ -35,24 +35,18 @@ public class TripController {
 
 
     @RequestMapping(path = "/trips", method = RequestMethod.POST)
-    public HashMap<String, Object> addTrip(HttpServletResponse response, @RequestBody DirectionsResult directionsResult,
-                                           @RequestParam(value = "vehicleId") String vehicleId,
+    public HashMap<String, Object> addTrip(HttpServletResponse response, @RequestParam(value = "vehicleId") String vehicleId,
                                            @RequestParam(value = "tripIndex") Integer tripIndex,
                                            @RequestParam(value = "price") Float price) {
-
-        //todo: i think this route will take the json string directions and need to be parsed into a DR.
 
         Authentication u = SecurityContextHolder.getContext().getAuthentication();
         User user = users.findFirstByName(u.getName());
 
-        Trip trip = convertDirectionsResultToTrips(directionsResult).get(tripIndex);
+        Trip trip = user.getTripCache().get(tripIndex);
         trip.setUser(user);
-
         Vehicle vehicle = vehicles.findOne(vehicleId);
         trip.setVehicle(vehicle);
-
         trip.setFuelGallonPrice(price);
-
         trips.save(trip);
 
         return rootSerializer.serializeOne(

@@ -42,6 +42,7 @@ public class DirectionsController {
     public HashMap<String, Object> findDirectionsForAnonymous(HttpServletResponse response, @RequestParam(value = "origin") String origin,
                                                               @RequestParam(value = "destination") String destination,
                                                               @RequestParam(value = "price") Float price) throws IOException {
+
         Object json = retrieveJsonDirections(origin, destination);
         Gson gson = new Gson();
         String jsonString = gson.toJson(json);
@@ -79,6 +80,7 @@ public class DirectionsController {
     public HashMap<String, Object> findDirectionsForRegisteredUser(HttpServletResponse response, @RequestParam(value = "origin") String origin,
                                                               @RequestParam(value = "destination") String destination,
                                                               @RequestParam(value = "price") Float price) throws IOException {
+
         Authentication u = SecurityContextHolder.getContext().getAuthentication();
         User user = users.findFirstByName(u.getName());
         ArrayList<Vehicle> usersVehicles = vehicles.findAllByUser(user);
@@ -88,6 +90,7 @@ public class DirectionsController {
         String jsonString = gson.toJson(json);
         DirectionsResult directionsResult = gson.fromJson(jsonString, DirectionsResult.class);
         ArrayList<Trip> trips = GoogleMaps.convertDirectionsResultToTrips(directionsResult);
+        user.setTripCache(trips);
 
         DirectionResponse directionResponse = new DirectionResponse();
         directionResponse.setJson(json);
@@ -96,8 +99,8 @@ public class DirectionsController {
             for (Vehicle vehicle : usersVehicles) {
                 Trip newTrip = new Trip(trip);
                 newTrip.setVehicle(vehicle);
-                newTrip.setFuelGallonPrice(price);
-                directionResponse.addToOne(newTrip);
+                newTrip.setFuelGallonPrice(price);      //todo: currently putting all vehicle/trips in one array
+                directionResponse.addToOne(newTrip);    //todo: restructure directionresponse to arrange by trip?
             }
         }
 

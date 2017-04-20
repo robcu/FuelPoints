@@ -25,6 +25,8 @@ public class User implements HasId {
 
     MenuItems optionsCache;
 
+    ArrayList<Trip> tripCache;
+
 
     public User() {
     }
@@ -68,5 +70,13 @@ public class User implements HasId {
 
     public void setOptionsCache(MenuItems optionsCache) {
         this.optionsCache = optionsCache;
+    }
+
+    public ArrayList<Trip> getTripCache() {
+        return tripCache;
+    }
+
+    public void setTripCache(ArrayList<Trip> tripCache) {
+        this.tripCache = tripCache;
     }
 }
