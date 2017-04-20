@@ -22,7 +22,7 @@ public class FuelPointsApplication {
 
 	public static void main(String[] args) throws IOException {
 
-	    //SpringApplication.run(FuelPointsApplication.class, args);
+	    SpringApplication.run(FuelPointsApplication.class, args);
         vehicleArrayList = FuelEconomy.hardCodeThreeVehicles();
     }
 
