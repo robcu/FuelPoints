@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import org.FuelPoints.utilities.parsers.RootParser;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -34,11 +35,11 @@ public class VehicleController {
     VehicleSerializer vehicleSerializer = new VehicleSerializer();
 
     @RequestMapping(path = "/vehicles", method = RequestMethod.POST)
-    public HashMap<String, Object> addVehicle(HttpServletResponse response,
-                                              @RequestParam(value = "feId") String feId) throws IOException {
+    public HashMap<String, Object> addVehicle(HttpServletResponse response, @RequestBody RootParser<Vehicle> parser) throws IOException {
 
         Authentication u = SecurityContextHolder.getContext().getAuthentication();
         User user = users.findFirstByName(u.getName());
+        String feId = parser.getData().getEntity().getFuelEconomyId();
 
         XMLVehicle xmlVehicle = retrieveXMLVehicle(feId);
 
