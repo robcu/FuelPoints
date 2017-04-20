@@ -49,6 +49,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .antMatchers(HttpMethod.POST, "/options")
                 .permitAll()
+                .antMatchers(HttpMethod.GET, "/direction-results")
+                .permitAll()
                 // All other requests must be authenticated
                 .anyRequest()
                 .authenticated().and()
