@@ -152,11 +152,10 @@ public class Trip implements HasId {
     }
 
     public String getTime() {
-        Double doubleHours = (this.totalDuration / 3600);
+        Double doubleHours = (this.totalDuration/ 3600.0);
         Integer hours = doubleHours.intValue();
-        Double doubleMinutes = doubleHours - hours;
+        Double doubleMinutes = (doubleHours - hours) * 60;
         Integer minutes = doubleMinutes.intValue();
-
         return hours + "h " + minutes + "m";
     }
 }
