@@ -108,8 +108,8 @@ public class DirectionsController {
             for (Vehicle vehicle : usersVehicles) {
                 Trip newTrip = new Trip(trip);
                 newTrip.setVehicle(vehicle);
-                newTrip.setFuelGallonPrice(price);      //todo: currently putting all vehicle/trips in one array
-                directionResponse.addToOne(newTrip);    //todo: restructure directionresponse to arrange by trip?
+                newTrip.setFuelGallonPrice(price);
+                directionResponse.addToOne(newTrip);
             }
         }
 

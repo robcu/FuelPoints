@@ -1,6 +1,7 @@
 package org.FuelPoints.controllers;
 
 import org.FuelPoints.FuelPointsApplication;
+import org.FuelPoints.clients.FuelEconomy;
 import org.FuelPoints.entities.User;
 import org.FuelPoints.entities.Vehicle;
 import org.FuelPoints.services.UserRepository;
@@ -42,7 +43,7 @@ public class VehicleController {
         String feId = parser.getData().getEntity().getFuelEconomyId();
         String optionText = parser.getData().getEntity().getOption();
 
-        XMLVehicle xmlVehicle = retrieveXMLVehicle(feId);
+        XMLVehicle xmlVehicle = FuelEconomy.retrieveXMLVehicle(feId);
 
         Vehicle vehicle = new Vehicle(xmlVehicle.getYear(), xmlVehicle.getMake(), xmlVehicle.getModel(),
                 optionText, feId, xmlVehicle.getCityMPG(), xmlVehicle.getHwyMPG(), xmlVehicle.getCombMPG(), user);
