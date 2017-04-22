@@ -44,7 +44,7 @@ public class FuelEconomy {
     public static ArrayList<Vehicle> hardCodeThreeVehicles(){
 
         String touaregFEID = "32738";
-        String touaregOption = "Auto (S8), 6 cyl, 3.6 ";
+        String touaregOption = "Auto (S8), 6 cyl, 3.6 L";
         String priusFEID = "33324";
         String priusOption = "Auto (variable gear ratios), 4 cyl, 1.8 L";
         String accordFEID = "33173";

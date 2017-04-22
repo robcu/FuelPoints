@@ -38,10 +38,22 @@ public class DirectionsController {
     RootSerializer rootSerializer = new RootSerializer();
     DirectionResponseSerializer directionResponseSerializer = new DirectionResponseSerializer();
 
-    @RequestMapping(path = "/direction-results", method = RequestMethod.GET)
-    public HashMap<String, Object> findDirectionsForAnonymous(HttpServletResponse response, @RequestParam(value = "origin") String origin,
-                                                              @RequestParam(value = "destination") String destination,
-                                                              @RequestParam(value = "price") Float price) throws IOException {
+    @RequestMapping(path = "/direction-responses", method = RequestMethod.GET)
+    public HashMap<String, Object> findDirections(HttpServletResponse response, @RequestParam(value = "origin") String origin,
+                                                  @RequestParam(value = "destination") String destination,
+                                                  @RequestParam(value = "price") Float price) throws IOException {
+        Authentication u = SecurityContextHolder.getContext().getAuthentication();
+
+        System.out.println(u.getName());
+
+        if (u.getName() != "anonymousUser") {
+            return findDirectionsForRegisteredUser(response, origin, destination, price);
+        }
+
+        return findDirectionsForAnonymous(response, origin, destination, price);
+    }
+
+    public HashMap<String, Object> findDirectionsForAnonymous(HttpServletResponse response, String origin, String destination, Float price) throws IOException {
 
         Object json = retrieveJsonDirections(origin, destination);
         Gson gson = new Gson();
@@ -76,10 +88,7 @@ public class DirectionsController {
                 directionResponseSerializer);
     }
 
-    @RequestMapping(path = "/direction-results", method = RequestMethod.GET)
-    public HashMap<String, Object> findDirectionsForRegisteredUser(HttpServletResponse response, @RequestParam(value = "origin") String origin,
-                                                                   @RequestParam(value = "destination") String destination,
-                                                                   @RequestParam(value = "price") Float price) throws IOException {
+    public HashMap<String, Object> findDirectionsForRegisteredUser(HttpServletResponse response, String origin, String destination, Float price) throws IOException {
 
         Authentication u = SecurityContextHolder.getContext().getAuthentication();
         User user = users.findFirstByName(u.getName());
@@ -99,8 +108,8 @@ public class DirectionsController {
             for (Vehicle vehicle : usersVehicles) {
                 Trip newTrip = new Trip(trip);
                 newTrip.setVehicle(vehicle);
-                newTrip.setFuelGallonPrice(price);      //todo: currently putting all vehicle/trips in one array
-                directionResponse.addToOne(newTrip);    //todo: restructure directionresponse to arrange by trip?
+                newTrip.setFuelGallonPrice(price);
+                directionResponse.addToOne(newTrip);
             }
         }
 
