@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 public class FuelEconomy {
 
-    public static String BASE_URL = "http://www.fueleconomy.gov/ws/rest/vehicle/menu/";
+    private static String BASE_URL = "http://www.fueleconomy.gov/ws/rest/vehicle/menu/";
 
     public static DataList retrieveList(String urlExtension) throws IOException {
         RestTemplate restTemplate = new RestTemplate();
@@ -29,20 +29,15 @@ public class FuelEconomy {
 
     public static MenuItems retrieveOptionsAndVehicleNumbers(String urlExtension){
         RestTemplate restTemplate = new RestTemplate();
-        MenuItems mi = restTemplate.getForObject(BASE_URL + urlExtension, MenuItems.class);
-
-        return mi;
+        return restTemplate.getForObject(BASE_URL + urlExtension, MenuItems.class);
     }
 
     public static XMLVehicle retrieveXMLVehicle(String id) {
         RestTemplate restTemplate = new RestTemplate();
-        XMLVehicle xmlVehicle = restTemplate.getForObject("http://www.fueleconomy.gov/ws/rest/vehicle/" + id, XMLVehicle.class);
-
-        return xmlVehicle;
+        return restTemplate.getForObject("http://www.fueleconomy.gov/ws/rest/vehicle/" + id, XMLVehicle.class);
     }
 
     public static ArrayList<Vehicle> hardCodeThreeVehicles(){
-
         String touaregFEID = "32738";
         String touaregOption = "Auto (S8), 6 cyl, 3.6 ";
         String priusFEID = "33324";

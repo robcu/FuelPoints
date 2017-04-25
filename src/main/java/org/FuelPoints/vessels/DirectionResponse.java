@@ -9,7 +9,6 @@ public class DirectionResponse implements HasId{
 
     String id = "1";
     Object json;
-
     ArrayList<Trip> tripsWithVehicleOne = new ArrayList<>();
     ArrayList<Trip> tripsWithVehicleTwo = new ArrayList<>();
     ArrayList<Trip> tripsWithVehicleThree = new ArrayList<>();
