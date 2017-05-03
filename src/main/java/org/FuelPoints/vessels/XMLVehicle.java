@@ -42,8 +42,8 @@ public class XMLVehicle {
         } else {
             this.hwyMPG = hwyMPG;
         }
-        if (this.combMPG == 0) {
-            this.combMPG = combMPGb;
+        if (combMPG == 0.0) {
+            this.combMPG = combMPGb;     //todo: this is not working as expected. maybe this logic should happen somewhere other than the constructor
         } else {
             this.combMPG = combMPG;
         }
@@ -94,7 +94,11 @@ public class XMLVehicle {
     }
 
     public void setCombMPG(Double combMPG) {
-        this.combMPG = combMPG;
+        if (combMPG == 0.0) {
+            this.combMPG = combMPGb;
+        } else {
+            this.combMPG = combMPG;
+        }
     }
 
     public Double getCityMPGb() {
