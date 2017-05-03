@@ -17,6 +17,12 @@ public class XMLVehicle {
     Double hwyMPG;
     @XmlElement(name = "comb08U")
     Double combMPG;
+    @XmlElement(name = "city08")
+    Double cityMPGb;
+    @XmlElement(name = "highway08")
+    Double hwyMPGb;
+    @XmlElement(name = "comb08")
+    Double combMPGb;
 
     public XMLVehicle() {
     }
@@ -55,7 +61,10 @@ public class XMLVehicle {
     }
 
     public Double getCityMPG() {
-        return cityMPG;
+        if (cityMPG == 0) {
+            return cityMPGb;
+        }
+        else return cityMPG;
     }
 
     public void setCityMPG(Double cityMPG) {
@@ -63,7 +72,10 @@ public class XMLVehicle {
     }
 
     public Double getHwyMPG() {
-        return hwyMPG;
+        if (hwyMPG == 0) {
+            return hwyMPGb;
+        }
+        else return hwyMPG;
     }
 
     public void setHwyMPG(Double hwyMPG) {
@@ -71,10 +83,37 @@ public class XMLVehicle {
     }
 
     public Double getCombMPG() {
-        return combMPG;
+        if (combMPG == 0) {
+            return combMPGb;
+        }
+        else return combMPG;
     }
 
     public void setCombMPG(Double combMPG) {
         this.combMPG = combMPG;
+    }
+
+    public Double getCityMPGb() {
+        return cityMPGb;
+    }
+
+    public void setCityMPGb(Double cityMPGb) {
+        this.cityMPGb = cityMPGb;
+    }
+
+    public Double getHwyMPGb() {
+        return hwyMPGb;
+    }
+
+    public void setHwyMPGb(Double hwyMPGb) {
+        this.hwyMPGb = hwyMPGb;
+    }
+
+    public Double getCombMPGb() {
+        return combMPGb;
+    }
+
+    public void setCombMPGb(Double combMPGb) {
+        this.combMPGb = combMPGb;
     }
 }
